@@ -1,0 +1,53 @@
+﻿using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+
+namespace Amulet_of_Ouroboros
+{
+    static class Extends{
+    
+        public static Vector2 Times(this Vector2 vec, double j) {
+            float i = (float) j;
+            return new Vector2( vec.X * i, vec.Y * i);
+        }
+
+
+        public static Vector2 Flip(this Vector2 vec)
+        {
+            return new Vector2(vec.Y, vec.X);
+        }
+
+        public static Vector2 Abs(this Vector2 vec)
+        {
+            return new Vector2(Math.Abs(vec.X), Math.Abs(vec.Y));
+        }
+
+        public static bool Equals(this Vector2 vec, Vector2 vec2)
+        {
+            return (int)vec.X == (int)vec2.X && (int)vec.Y == (int)vec2.Y;
+        }
+
+        public static bool VEquals(this Vector2 vec, Vector2 vec2)
+        {
+            return (int)vec.X == (int)vec2.X && (int)vec.Y == (int)vec2.Y;
+        }
+
+        public static bool IEquals(this Vector2 vec, int X, int Y)
+        {
+            return (int)vec.X == X && (int)vec.Y == Y;
+        }
+
+        public static List<Vector2> Flip(this List<Vector2> list) 
+        {
+            List<Vector2> ret = new List<Vector2>();
+            while (list.Count > 0) 
+            {
+                ret.Add(list[list.Count - 1]);
+
+                list.RemoveAt(list.Count - 1);
+            }
+            return ret;
+        }
+    }
+}
