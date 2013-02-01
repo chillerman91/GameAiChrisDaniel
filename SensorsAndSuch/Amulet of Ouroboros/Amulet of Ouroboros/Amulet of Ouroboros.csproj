@@ -92,6 +92,7 @@
     <Compile Include="Audio\SoundEffects.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="Extends.cs" />
+    <Compile Include="FrameWork\SensorScreen.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Mobs\Monsters\Boar.cs" />
     <Compile Include="Mobs\Monsters\SnakeOld.cs" />
@@ -133,6 +134,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Farseer Physics Engine 3.3.1 Samples XNA%282%29\Farseer Physics Engine 3.3.1 Samples XNA\Farseer Physics Engine 3.3 XNA\Farseer Physics XNA.csproj">
+      <Project>{0A850700-1ABB-4288-A391-6726B90EBEB9}</Project>
+      <Name>Farseer Physics XNA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Farseer Physics Engine 3.3.1 Samples XNA%282%29\Farseer Physics Engine 3.3.1 Samples XNA\Samples XNA\Samples XNA\Samples XNA.csproj">
+      <Project>{1681ADA2-B2F3-4157-A603-82C742379856}</Project>
+      <Name>Samples XNA</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Amulet of OuroborosContent\Amulet of OuroborosContent.contentproj">
       <Name>Amulet_of_OuroborosContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>

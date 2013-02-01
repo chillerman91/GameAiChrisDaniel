@@ -106,6 +106,7 @@ namespace Amulet_of_Ouroboros.Mobs
             Vector2? newPos = Globals.map.FindAtHeightFree((int)GridPos.X, (int)GridPos.Y, 1, 5);
             if (newPos != null)
             {
+                health = 0;
                 Globals.Mobs.AddMonster(type, (Vector2)newPos);
 
                 return true;

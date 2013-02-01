@@ -8,10 +8,13 @@ using Amulet_of_Ouroboros.Texts;
 using TiledLib;
 using Amulet_of_Ouroboros.Maps;
 using Amulet_of_Ouroboros.Mobs;
+using FarseerPhysics.SamplesFramework;
+//using Amulet_of_Ouroboros.Screens.Screen.ChangeScreen;
+using Amulet_of_Ouroboros.FrameWork;
 
 namespace Amulet_of_Ouroboros.Screens
 {
-    class Gameplay : PhysicsGameScreen
+    class Gameplay : SensorScreen
     {
         Background background;
         HUDPlayerInfo HUDPlayerInfo;
@@ -58,7 +61,7 @@ namespace Amulet_of_Ouroboros.Screens
         Tile enemyTile;
         Tile exitTile;
         GraphicsDevice Device;
-        public Gameplay(Game game, SpriteBatch batch, ChangeScreen changeScreen, GraphicsDeviceManager graphics, GraphicsDevice Device)
+        public Gameplay(Game game, SpriteBatch batch, Amulet_of_Ouroboros.Screens.Screen.ChangeScreen changeScreen, GraphicsDeviceManager graphics, GraphicsDevice Device)
             : base(game, batch, changeScreen, graphics)
         {
             this.Device = Device;
@@ -76,20 +79,20 @@ namespace Amulet_of_Ouroboros.Screens
 
         protected override void LoadScreenContent(ContentManager content)
         {
-
+            base.LoadContent();
             World.Gravity = new Vector2(0f, 20f);
             background = new Background(content, "Images/GameplayBackground");
 
             Globals.SetGeneral( content, Device);
-            Globals.SetLevelSpecific(new MobManager(), new RandomMap());
+            Globals.SetLevelSpecific(new MobManager(), new RandomMap(), World);
             player = new Player(content);
             Globals.player = player;
             Globals.Mobs.AddPlayer(player);
-            for (int i = 0; i < 120; i++)
+            for (int i = 0; i < 0; i++)
                 Globals.Mobs.AddMonster(BaseMonster.MonTypes.Snake, Globals.map.GetRandomFreePos());
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 0; i++)
                 Globals.Mobs.AddMonster(BaseMonster.MonTypes.Snake, Globals.map.GetRandomFreePos(), Globals.rand.Next(100) + 20);
-            for (int i = 0; i < 150; i++)
+            for (int i = 0; i < 1; i++)
                 Globals.Mobs.AddMonster(BaseMonster.MonTypes.Boar, Globals.map.GetRandomFreePos(), Globals.rand.Next(8) + 2);
 
             HUDPlayerInfo = new HUDPlayerInfo(content, player);
@@ -410,7 +413,7 @@ namespace Amulet_of_Ouroboros.Screens
 
         protected override void DrawScreen(SpriteBatch batch, DisplayOrientation displayOrientation)
         {
-            background.Draw(batch);
+            //background.Draw(batch);
             if (playerCreated && !inBattle)
             {
                 DrawGameplayItems(batch);
@@ -425,7 +428,7 @@ namespace Amulet_of_Ouroboros.Screens
         {
             ++tick;
             if (tick % 80 == 0){// tick< 600 * 20) { 
-               UpdateAll();
+               //UpdateAll();
             }
             player.UpdatePosition();
             HUDPlayerInfo.Update(player);
@@ -456,8 +459,8 @@ namespace Amulet_of_Ouroboros.Screens
             }
             else if (input.PreviousMouseState.LeftButton == ButtonState.Pressed || input.CheckMouseRelease(skipButton))
             {
-                player.Rest();
-                UpdateAll();
+                //player.Rest();
+                //UpdateAll();
             }
             Globals.Mobs.Update(input);
         }
@@ -485,17 +488,17 @@ namespace Amulet_of_Ouroboros.Screens
 
         private void DrawGameplayItems(SpriteBatch batch)
         {
-            Globals.map.Draw(batch);
+            //Globals.map.Draw(batch);
             Globals.Mobs.Draw(batch);
-            player.Draw(batch);
-            attackButton.Draw(batch);
+            //player.Draw(batch);
+            //attackButton.Draw(batch);
 
-            skipButton.Draw(batch);
-            HUDPlayerInfo.Draw(batch);
-            leftButton.Draw(batch);
-            rightButton.Draw(batch);
-            upButton.Draw(batch);
-            downButton.Draw(batch);
+            //skipButton.Draw(batch);
+           // HUDPlayerInfo.Draw(batch);
+            //leftButton.Draw(batch);
+            //rightButton.Draw(batch);
+            //upButton.Draw(batch);
+            //downButton.Draw(batch);
         }
 
         private void DrawPregameStuff(SpriteBatch batch)

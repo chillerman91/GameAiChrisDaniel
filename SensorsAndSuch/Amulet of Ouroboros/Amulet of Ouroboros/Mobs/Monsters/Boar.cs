@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Content;
 using Amulet_of_Ouroboros.Texts;
 using System;
 using Amulet_of_Ouroboros.Maps;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
+using FarseerPhysics.SamplesFramework;
 
 //Stone monster: can move walls
 //water creature: becomes pools
@@ -43,10 +46,23 @@ namespace Amulet_of_Ouroboros.Mobs
 
 
         #endregion
+        Body _rectangle;
 
+        private FarseerPhysics.SamplesFramework.Sprite _rectangleSprite;
         public Boar(Vector2 GridPos, int id, int level = 5)
             : base("mobs/Boar", GridPos, "Snake" + id, GetRandDir(), 15, 0, id)
         {
+
+            _rectangle = BodyFactory.CreateRectangle(Globals.World, 1.5f, 1.5f, 1f);
+            _rectangleSprite = new FarseerPhysics.SamplesFramework.Sprite(texture);
+            _rectangle.BodyType = BodyType.Dynamic;
+            int i = 0;
+            _rectangle.Position = new Vector2(200, 200);//-13.0f + 1.282f * i);
+            _rectangle.Friction = 0.75f;
+
+                //Globals.ScreenManager.Assets.TextureFromShape(_rectangle.FixtureList[0].Shape,
+                 //                                                   MaterialType.Squares,
+                  //                                                  Color.ForestGreen, 0.8f));
             hunger = level * 10;
             StateStack = new List<Func<bool>>();
             StateStack.Add(EvaluateWants);
@@ -456,12 +472,16 @@ namespace Amulet_of_Ouroboros.Mobs
         public override void Draw(SpriteBatch batch)
         {
             CurrentGridPos = CurrentGridPos.Times(0.95) + GridPos.Times(.05);
-            batch.Draw(texture, new Rectangle((int)Globals.map.TranslateToPos(CurrentGridPos).X + TileWidth / 2, (int)Globals.map.TranslateToPos(CurrentGridPos).Y + TileHeight / 2, TileWidth, TileHeight),
-                null, color, TranslateVecToRadians(moveDir), new Vector2(32/2, 32/2), SpriteEffects.None, 0f);
+            //batch.Draw(texture, new Rectangle((int)Globals.map.TranslateToPos(CurrentGridPos).X + TileWidth / 2, (int)Globals.map.TranslateToPos(CurrentGridPos).Y + TileHeight / 2, TileWidth, TileHeight),
+            //    null, color, TranslateVecToRadians(moveDir), new Vector2(32/2, 32/2), SpriteEffects.None, 0f);
             info.Position = Globals.map.TranslateToPos(CurrentGridPos);
+            batch.Draw(_rectangleSprite.Texture,
+                               _rectangle.Position, null,
+                               Color.White, _rectangle.Rotation, _rectangleSprite.Origin, 1f,
+                               SpriteEffects.None, 0f);
 
             info.ChangeText("" + Level);
-            info.Draw(batch);
+            //info.Draw(batch);
         }
     }
 }

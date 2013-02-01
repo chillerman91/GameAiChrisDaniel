@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Amulet_of_Ouroboros.Screens;
+using FarseerPhysics.SamplesFramework;
 
 namespace Amulet_of_Ouroboros
 {
@@ -17,6 +18,8 @@ namespace Amulet_of_Ouroboros
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         ScreenStateSwitchboard screen;
+
+        public ScreenManager ScreenManager { get; set; }
 
         public Game1()
         {
@@ -27,6 +30,9 @@ namespace Amulet_of_Ouroboros
             graphics.PreferredBackBufferHeight = 768;
             //ConvertUnits.SetDisplayUnitToSimUnitRatio(24f);
             Content.RootDirectory = "Content";
+            //ScreenManager = new ScreenManager(this);
+            Globals.ScreenManager = ScreenManager;
+            //Components.Add(ScreenManager);
         }
 
         protected override void Initialize()

@@ -14,8 +14,8 @@ namespace Amulet_of_Ouroboros.Maps
 
     public class RandomMap
     {
-        private static int MapWidth = 100;
-        private static int MapHeight = 40;
+        private static int MapWidth = 30;
+        private static int MapHeight = 25;
 
         private static int startX = 20;
         private static int startY = 20;
@@ -458,7 +458,7 @@ namespace Amulet_of_Ouroboros.Maps
                    if ( grid[i, j].Count != 0) {
                        foreach (BaseTile tile in grid[i, j])
                        {
-                           tile.Draw(batch);
+                           //tile.Draw(batch);
                        }
                    }
                 }
