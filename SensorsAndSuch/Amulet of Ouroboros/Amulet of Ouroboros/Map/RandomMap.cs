@@ -6,7 +6,7 @@ using Amulet_of_Ouroboros.Sprites;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Microsoft.Xna.Framework.Content;
-using Amulet_of_Ouroboros.Map;
+using Amulet_of_Ouroboros.Maps;
 using Amulet_of_Ouroboros.Mobs;
 
 namespace Amulet_of_Ouroboros.Maps
@@ -42,7 +42,7 @@ namespace Amulet_of_Ouroboros.Maps
                 for (int y = 0; y < MapHeight; y++)
                     grid[x, y] = new List<BaseTile>();
 
-            AddBorder(40);
+            AddBorder(100);
             for (int i = 0; i < 40; i++)
             {
                 AddRoom(i * MapWidth/ 10 + 1, 5);
@@ -63,6 +63,8 @@ namespace Amulet_of_Ouroboros.Maps
                 freePos = GetRandomFreePos();
                 HitAttatchedTiles((int)freePos.X, (int)freePos.Y);
                 AddTheNotHit();
+
+                AddBorder(100);
             for (int x = 0; x < MapWidth; x++)
                 for (int y = 0; y < MapHeight; y++)
                     if (grid[x, y].Count == 0) 
@@ -458,7 +460,7 @@ namespace Amulet_of_Ouroboros.Maps
                    if ( grid[i, j].Count != 0) {
                        foreach (BaseTile tile in grid[i, j])
                        {
-                           //tile.Draw(batch);
+                           tile.Draw(batch);
                        }
                    }
                 }

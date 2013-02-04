@@ -32,7 +32,7 @@ namespace Amulet_of_Ouroboros.Maps
         #endregion
         //protected int height;
 
-        Vector2 CurrentPos;
+        protected Vector2 CurrentPos;
         public BaseTile(string tex, Vector2 GridPos)
         {
             texture = Globals.content.Load<Texture2D>(tex);
@@ -66,10 +66,10 @@ namespace Amulet_of_Ouroboros.Maps
             
         }
 
-        public void Draw(SpriteBatch batch)
+        public virtual void Draw(SpriteBatch batch)
         {
             CurrentPos = CurrentPos.Times(0.95) + Globals.map.TranslateToPos(GridPos).Times(.05);
-            batch.Draw(texture, new Rectangle((int)(CurrentPos).X, (int)(CurrentPos).Y, TileWidth, TileHeight), (Color)(adjColor == null ? color : adjColor));
+            // batch.Draw(texture, new Rectangle((int)(CurrentPos).X, (int)(CurrentPos).Y, TileWidth, TileHeight), (Color)(adjColor == null ? color : adjColor));
         }
 
         internal void Update()

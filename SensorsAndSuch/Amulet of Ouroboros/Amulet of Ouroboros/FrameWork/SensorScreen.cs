@@ -6,25 +6,33 @@ using FarseerPhysics.Dynamics;
 using Amulet_of_Ouroboros.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using FarseerPhysics.Common;
+using FarseerPhysics.Collision.Shapes;
+using FarseerPhysics.SamplesFramework;
+using FarseerPhysics.Collision;
+using FarseerPhysics.Common.Decomposition;
+using Microsoft.Xna.Framework.Content;
 
 namespace Amulet_of_Ouroboros.FrameWork
 {
     class SensorScreen: Screen
     {
         protected World World;
+        private GraphicsDevice _device;
+        private Texture2D _materials;
+        private BasicEffect _effect;
 
-        public SensorScreen(Game game, SpriteBatch batch, Amulet_of_Ouroboros.Screens.Screen.ChangeScreen changeScreen, GraphicsDeviceManager graphics)
+        public SensorScreen(Game game, SpriteBatch batch, ChangeScreen changeScreen, GraphicsDeviceManager graphics)
             : base(game, batch, changeScreen, graphics)
         {
         }
 
-        public void LoadContent()
+        public void LoadContent(ContentManager contentManager)
         {
             // base.LoadContent();
 
             //We enable diagnostics to show get values for our performance counters.
             //Settings.EnableDiagnostics = true;
-
             if (World == null)
             {
                 World = new World(Vector2.Zero);
@@ -33,28 +41,20 @@ namespace Amulet_of_Ouroboros.FrameWork
             {
                 World.Clear();
             }
-            /*
-            if (DebugView == null)
+        }
+        public void Update(GameTime gameTime, bool otherScreenHasFocus = false, bool coveredByOtherScreen = false)
+        {
+            if (!coveredByOtherScreen && !otherScreenHasFocus)
             {
-                DebugView = new DebugViewXNA(World);
-                DebugView.RemoveFlags(DebugViewFlags.Shape);
-                DebugView.RemoveFlags(DebugViewFlags.Joint);
-                DebugView.DefaultShapeColor = Color.White;
-                DebugView.SleepingShapeColor = Color.LightGray;
-                DebugView.LoadContent(ScreenManager.GraphicsDevice, ScreenManager.Content);
-            }
-            if (Camera == null)
-            {
-                Camera = new Camera2D(ScreenManager.GraphicsDevice);
+                // variable time step but never less then 30 Hz
+                World.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalSeconds, (1f / 30f)));
             }
             else
             {
-                Camera.ResetCamera();
+                World.Step(0f);
             }
-
-            */
-            // Loading may take a while... so prevent the game from "catching up" once we finished loading
-            //ScreenManager.Game.ResetElapsedTime();
+            //Camera.Update(gameTime);
+            //base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
         }
     }
 }

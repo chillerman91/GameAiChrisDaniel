@@ -19,18 +19,20 @@ namespace Amulet_of_Ouroboros
         public static GraphicsDevice Device;
         public static Player player;
         public static World World;
-
+        
+        public static AssetCreator AssetCreatorr { get; set; }
         public static ScreenManager ScreenManager { get; set; }
-        public static void SetGeneral(ContentManager content, GraphicsDevice device)
+        public static void SetGeneral(ContentManager content, GraphicsDevice device, World World)
         {
             Globals.content = content;
             Globals.Device = device;
+            AssetCreatorr = new AssetCreator(device);
+            Globals.World = World;
         }
-        public static void SetLevelSpecific(MobManager mobs, RandomMap map, World World)
+        public static void SetLevelSpecific(MobManager mobs, RandomMap map)
         {
             Globals.Mobs = mobs;
             Globals.map = map;
-            Globals.World = World;
         }
     }
 }

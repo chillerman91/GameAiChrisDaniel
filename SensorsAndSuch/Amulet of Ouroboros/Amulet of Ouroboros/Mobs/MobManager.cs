@@ -44,10 +44,10 @@ namespace Amulet_of_Ouroboros.Mobs
                 i++;
             }
             if (i >= MaxMonsters) return false;
-            if (monType == BaseMonster.MonTypes.Snake)
-                Monsters[i] = new Snake(gridPos, i, level);
-            else if (monType == BaseMonster.MonTypes.Boar)
-                Monsters[i] = new Boar(gridPos, i, level);
+            //if (monType == BaseMonster.MonTypes.Snake)
+                //Monsters[i] = new Snake(gridPos, i, level);
+            //else if (monType == BaseMonster.MonTypes.Boar)
+                Monsters[i] = new BadGuy(gridPos, i, level);
             return true;
         }
 
@@ -59,7 +59,7 @@ namespace Amulet_of_Ouroboros.Mobs
                 i++;
             }
             if (i >= MaxMonsters) return false;
-            Monsters[i] = new Snake(Globals.map.GetRandomFreePos(), i);
+            Monsters[i] = new BadGuy(Globals.map.GetRandomFreePos(), i);
             return true;
         }
 

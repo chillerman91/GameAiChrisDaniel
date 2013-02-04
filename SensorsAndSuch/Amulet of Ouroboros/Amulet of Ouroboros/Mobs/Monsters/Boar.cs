@@ -46,23 +46,23 @@ namespace Amulet_of_Ouroboros.Mobs
 
 
         #endregion
-        Body _rectangle;
 
+        Body _rectangle;
         private FarseerPhysics.SamplesFramework.Sprite _rectangleSprite;
+
         public Boar(Vector2 GridPos, int id, int level = 5)
             : base("mobs/Boar", GridPos, "Snake" + id, GetRandDir(), 15, 0, id)
         {
 
-            _rectangle = BodyFactory.CreateRectangle(Globals.World, 1.5f, 1.5f, 1f);
-            _rectangleSprite = new FarseerPhysics.SamplesFramework.Sprite(texture);
+            _rectangle = BodyFactory.CreateRectangle(Globals.World, width: TileWidth / 200f, height: TileHeight / 200f, density: 1f);
+            _rectangleSprite = new FarseerPhysics.SamplesFramework.Sprite(Globals.AssetCreatorr.TextureFromShape(_rectangle.FixtureList[0].Shape,
+                                                                                MaterialType.Squares,
+                                                                                Color.ForestGreen, 1f));
+            //new FarseerPhysics.SamplesFramework.Sprite(texture);
             _rectangle.BodyType = BodyType.Dynamic;
             int i = 0;
-            _rectangle.Position = new Vector2(200, 200);//-13.0f + 1.282f * i);
+            _rectangle.Position = GridPos/4f;
             _rectangle.Friction = 0.75f;
-
-                //Globals.ScreenManager.Assets.TextureFromShape(_rectangle.FixtureList[0].Shape,
-                 //                                                   MaterialType.Squares,
-                  //                                                  Color.ForestGreen, 0.8f));
             hunger = level * 10;
             StateStack = new List<Func<bool>>();
             StateStack.Add(EvaluateWants);
@@ -71,7 +71,6 @@ namespace Amulet_of_Ouroboros.Mobs
             strength = 10;
             while (level > 1)
                 exp += 10 * (level--);
-
             type = MonTypes.Boar;
             friendly = MonTypes.Boar;
             aggressionVFear = Globals.rand.Next(50) - 25;
@@ -471,15 +470,15 @@ namespace Amulet_of_Ouroboros.Mobs
 
         public override void Draw(SpriteBatch batch)
         {
-            CurrentGridPos = CurrentGridPos.Times(0.95) + GridPos.Times(.05);
+            CurrentGridPos = Globals.map.TranslateToPos(_rectangle.Position); ; // CurrentGridPos.Times(0.95) + GridPos.Times(.05);
             //batch.Draw(texture, new Rectangle((int)Globals.map.TranslateToPos(CurrentGridPos).X + TileWidth / 2, (int)Globals.map.TranslateToPos(CurrentGridPos).Y + TileHeight / 2, TileWidth, TileHeight),
             //    null, color, TranslateVecToRadians(moveDir), new Vector2(32/2, 32/2), SpriteEffects.None, 0f);
             info.Position = Globals.map.TranslateToPos(CurrentGridPos);
+
             batch.Draw(_rectangleSprite.Texture,
-                               _rectangle.Position, null,
+                               _rectangle.Position * 100, null,
                                Color.White, _rectangle.Rotation, _rectangleSprite.Origin, 1f,
                                SpriteEffects.None, 0f);
-
             info.ChangeText("" + Level);
             //info.Draw(batch);
         }
