@@ -148,7 +148,7 @@
     <Compile Include="ScreenSystem\PhysicsGameScreen.cs" />
     <Compile Include="ScreenSystem\ScreenManagerComponent.cs" />
     <Compile Include="ScreenSystem\SpriteFonts.cs" />
-    <Compile Include="ScreenSystem\BackgroundScreen.cs" />
+    <Compile Include="Samples\BackgroundScreen.cs" />
     <Compile Include="ScreenSystem\MenuButton.cs" />
     <Compile Include="ScreenSystem\LogoScreen.cs" />
     <Compile Include="ScreenSystem\MenuEntry.cs" />

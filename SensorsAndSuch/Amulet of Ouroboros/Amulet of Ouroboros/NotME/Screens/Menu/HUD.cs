@@ -23,7 +23,7 @@ namespace Amulet_of_Ouroboros.Screens
             Level = new Text(content.Load<SpriteFont>("Fonts/buttonFont"), p.Name + "   Lvl: " + p.GetLevel(), BaseLocation + new Vector2(0, 0), Color.Blue);
             PlayerHealth = new Text(content.Load<SpriteFont>("Fonts/buttonFont"), "Health: " + p.health + "/", BaseLocation + new Vector2(0, 40), Color.Blue);
             Strength = new Text(content.Load<SpriteFont>("Fonts/buttonFont"), "MP: ", BaseLocation + new Vector2(200, 40), Color.Blue);
-            exp = new Text(content.Load<SpriteFont>("Fonts/buttonFont"), "Pieces: " + p.Pieces , BaseLocation + new Vector2(0, 80), Color.Blue);
+            exp = new Text(content.Load<SpriteFont>("Fonts/buttonFont"), "Pieces: " + 0 , BaseLocation + new Vector2(0, 80), Color.Blue);
         }
 
         public void Draw(SpriteBatch batch)
@@ -37,10 +37,10 @@ namespace Amulet_of_Ouroboros.Screens
 
         public void Update(Player p)
         {
-            Level.ChangeText(p.Name + "   Lvl: " + p.GetLevel());
-            PlayerHealth.ChangeText("Health: " + p.health);
-            Strength.ChangeText("Strength: " + p.GetStrength());
-            exp.ChangeText("Exp: " + p.GetExp() +"/" + p.GetExpForNextLevel());
+            //Level.ChangeText(p.Name + "   Lvl: " + p.GetLevel());
+            //PlayerHealth.ChangeText("Health: " + p.health);
+            //Strength.ChangeText("Strength: " + p.GetStrength());
+            //exp.ChangeText("Exp: " + p.GetExp() +"/" + p.GetExpForNextLevel());
         }
     }
 }

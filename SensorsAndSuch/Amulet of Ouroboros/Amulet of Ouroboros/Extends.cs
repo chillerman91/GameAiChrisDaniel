@@ -40,6 +40,14 @@ namespace Amulet_of_Ouroboros
             return vec;
         }
 
+        public static Vector2 GetVecFromAng(this float inRadians)
+        {
+            Vector2 vec = new Vector2((float)Math.Cos(inRadians), (float) Math.Sin(inRadians));
+            vec.Normalize();
+            return vec;
+        }
+
+
         public static bool IEquals(this Vector2 vec, int X, int Y)
         {
             return (int)vec.X == X && (int)vec.Y == Y;

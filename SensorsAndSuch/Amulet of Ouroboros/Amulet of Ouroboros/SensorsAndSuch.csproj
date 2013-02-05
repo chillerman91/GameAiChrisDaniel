@@ -83,11 +83,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Net" />
-    <Reference Include="TiledLib">
-      <HintPath>..\..\TiledLib\TiledLib.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mobs\Sensors\Wisker.cs" />
     <Compile Include="NotME\Background.cs" />
     <Compile Include="Extends.cs" />
     <Compile Include="FrameWork\SensorScreen.cs" />
@@ -111,7 +109,7 @@
     <Compile Include="NotME\Screens\Screen.cs" />
     <Compile Include="NotME\Screens\Title.cs" />
     <Compile Include="NotME\Sprites\Button.cs" />
-    <Compile Include="NotME\Sprites\Player.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="NotME\Sprites\Sprite.cs" />
     <Compile Include="NotME\Text.cs" />
   </ItemGroup>

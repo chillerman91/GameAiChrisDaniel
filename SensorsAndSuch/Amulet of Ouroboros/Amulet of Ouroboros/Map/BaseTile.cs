@@ -17,8 +17,8 @@ namespace Amulet_of_Ouroboros.Maps
             Wall,
             None
         }
-        public static int TileWidth = 25;
-        public static int TileHeight = 25;
+        public static int TileWidth = 26;
+        public static int TileHeight = 26;
         public static int DistBetween = 30;
         public Vector2 GridPos;
         protected Texture2D texture;

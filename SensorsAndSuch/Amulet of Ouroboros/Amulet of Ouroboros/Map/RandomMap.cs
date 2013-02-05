@@ -14,8 +14,8 @@ namespace Amulet_of_Ouroboros.Maps
 
     public class RandomMap
     {
-        private static int MapWidth = 30;
-        private static int MapHeight = 25;
+        private static int MapWidth = 40;
+        private static int MapHeight = 30;
 
         private static int startX = 20;
         private static int startY = 20;
@@ -42,7 +42,7 @@ namespace Amulet_of_Ouroboros.Maps
                 for (int y = 0; y < MapHeight; y++)
                     grid[x, y] = new List<BaseTile>();
 
-            AddBorder(100);
+            //AddBorder(100);
             for (int i = 0; i < 40; i++)
             {
                 AddRoom(i * MapWidth/ 10 + 1, 5);
@@ -64,7 +64,7 @@ namespace Amulet_of_Ouroboros.Maps
                 HitAttatchedTiles((int)freePos.X, (int)freePos.Y);
                 AddTheNotHit();
 
-                AddBorder(100);
+            AddBorder(100);
             for (int x = 0; x < MapWidth; x++)
                 for (int y = 0; y < MapHeight; y++)
                     if (grid[x, y].Count == 0) 
@@ -105,6 +105,26 @@ namespace Amulet_of_Ouroboros.Maps
 
         public void AddBorder(int prob)
         {
+
+            for (int j = 0; j < MapHeight; j++)
+            {
+                if (Globals.rand.Next(100) <= prob)
+                    grid[0, j].Clear();
+                if (Globals.rand.Next(100) <= prob)
+                    grid[MapWidth - 1, j].Clear();
+
+
+            }
+            for (int i = 0; i < MapWidth; i++)
+            {
+                if (Globals.rand.Next(100) <= prob)
+                    grid[i, 0].Clear();
+                if (Globals.rand.Next(100) <= prob)
+                    grid[i, MapHeight - 1].Clear();
+            }
+
+
+            /*
             for (int j = 0; j < MapHeight; j++)
             {
                 if (Globals.rand.Next(100) <= prob)
@@ -120,7 +140,7 @@ namespace Amulet_of_Ouroboros.Maps
                     grid[i, 0].Add( new Dirt(new Vector2(i, 0)));
                 if (Globals.rand.Next(100) <= prob)
                     grid[i, MapHeight - 1].Add( new Dirt(new Vector2(i, MapHeight - 1)));
-            }
+            }*/
         }
         #endregion
 

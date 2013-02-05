@@ -21,185 +21,78 @@ namespace Amulet_of_Ouroboros.Mobs
 {
     public class BadGuy : BaseMonster
     {
-        Text info;
-        protected List<Func<bool>> StateStack;
+        protected Body circle;
+        private FarseerPhysics.SamplesFramework.Sprite Sprite;
 
-        int TimeInState = 0;
-
-        #region changing in mind run;
-        List<Vector2> path;
-        #endregion
-
-        #region Static Per creator (run with NN)
-        int BaseMatingAge = 3;
-        private static int maxHealthPerLevel = 15;
-        int aggressionVFear = 0;
-        int strengthGrowth = 1;
-        #endregion
-
-        #region variables from cross State Set Up
-
-
-        #endregion
-
-        Body _rectangle;
-        private FarseerPhysics.SamplesFramework.Sprite _rectangleSprite;
-
-        public BadGuy(Vector2 GridPos, int id, int level = 5)
+        protected Wisker[] Wiskers = new Wisker[3];
+        public BadGuy(Vector2 GridPos, int id)
+            : this (GridPos, Color.ForestGreen, id)
+        {
+        }
+        public override void Kill() { }
+        public BadGuy(Vector2 GridPos, Color color, int id)
             : base("mobs/Boar", GridPos, "Snake" + id, GetRandDir(), 15, 0, id)
         {
 
-            _rectangle = BodyFactory.CreateRectangle(Globals.World, width: TileWidth / 200f, height: TileHeight / 200f, density: 1f);
-            _rectangleSprite = new FarseerPhysics.SamplesFramework.Sprite(Globals.AssetCreatorr.TextureFromShape(_rectangle.FixtureList[0].Shape,
+            //_rectangle = BodyFactory.CreateRectangle(Globals.World, width: TileWidth / 200f, height: TileHeight / 200f, density: 1f);
+
+            circle = BodyFactory.CreateCircle(Globals.World, radius: TileWidth / 300f, density: 1f);
+            Sprite = new FarseerPhysics.SamplesFramework.Sprite(Globals.AssetCreatorr.TextureFromShape(circle.FixtureList[0].Shape,
                                                                                 MaterialType.Squares,
-                                                                                Color.ForestGreen, 1f));
+                                                                                color, 1f));
+            //_rectangle.FixtureList[0].IsSensor = true;
+            circle.LinearDamping = 2;
+            circle.AngularDamping = 5;
             //new FarseerPhysics.SamplesFramework.Sprite(texture);
-            _rectangle.BodyType = BodyType.Dynamic;
+            circle.BodyType = BodyType.Dynamic;
             int i = 0;
-            _rectangle.Position = GridPos/4f;
-            _rectangle.Friction = 0.75f;
-            info = new Text(Globals.content.Load<SpriteFont>("Fonts/buttonFont"), "" + Level, GridPos, Color.Blue);
-        }
+            circle.Position = GridPos / 4f;
+            circle.Friction = 0.0f;
 
+            Wiskers[0] = new Wisker(attatched: circle, offSet: 0, WiskerLength: .32f);
 
-        public override void Kill()
-        {
-            //  visual.Draw();
+            Wiskers[1] = new Wisker(attatched: circle, offSet: (float)Math.PI / 4f, WiskerLength: .32f);
+            Wiskers[2] = new Wisker(attatched: circle, offSet: (float)Math.PI / -4f, WiskerLength: .32f);
         }
 
         public override void TakeTurn()
         {
-            Dir = Dir.AddAng(10);
-            _rectangle.ApplyForce(Dir*speed, _rectangle.Position);
-        }
-        
-        private void levelUp() {
-            Level += 1;
-            strength += strengthGrowth;
-            //NutVal = (int) (NutVal * 1.1);
-            exp -= Level * 10;
-            MaxHealth = Level * maxHealthPerLevel;
-        }
 
-        #region State Helpers
+            float ret = Wiskers[0].Update();
 
-        protected bool IsItimidating(BaseMonster mon)
-        {
-            if (mon != null && mon.type != friendly && mon.GetLevel() > Level + 2) 
-                return true;
-            return false;
-        }
-
-        protected bool IsGoodFood(BaseMonster mon)
-        {
-            if (mon == null || mon.type == friendly || mon.GetLevel() > Level + 1) return false;
-            if (strength >= mon.health) return true;
-            if (strength >= mon.health) return true;
-            return true;
-        }
-
-        #endregion
-
-        public override string GetInfo()
-        {
-            return "";// "Strength(" + strength + ")\nHunger(" + hunger + ")\nHealth(" + health + ")\nAge(" + Age + ")\nState(" + StateStack[StateStack.Count - 1].Method.Name + ")";
+            float ret1 = Wiskers[1].Update();
+            float ret2 = Wiskers[2].Update();// +(Globals.rand.Next((int)4) - 2) / 10f;
+            float range = (1 - ret) * 30 + 2;
+            // (Globals.rand.Next((int) range) - range/2) / 500f
+            circle.ApplyTorque((float) (ret1 - ret2)/100f);
+            if (ret > .32 && (ret1 > .45 || ret2> .45))
+            {
+                circle.ApplyForce(circle.Rotation.GetVecFromAng() * speed, circle.Position);
+            }
+            else
+            {
+                 circle.ApplyAngularImpulse((.1f) / 100f);
+                circle.ApplyForce(circle.Rotation.GetVecFromAng() * -2 * speed, circle.Position);
+            }
+            
         }
 
         public override void Draw(SpriteBatch batch)
-        {
-            CurrentGridPos = Globals.map.TranslateToPos(_rectangle.Position); ; // CurrentGridPos.Times(0.95) + GridPos.Times(.05);
-            //batch.Draw(texture, new Rectangle((int)Globals.map.TranslateToPos(CurrentGridPos).X + TileWidth / 2, (int)Globals.map.TranslateToPos(CurrentGridPos).Y + TileHeight / 2, TileWidth, TileHeight),
-            //    null, color, TranslateVecToRadians(moveDir), new Vector2(32/2, 32/2), SpriteEffects.None, 0f);
-            info.Position = Globals.map.TranslateToPos(CurrentGridPos);
+        {            
+            Wiskers[0].Draw(batch);
+            Wiskers[1].Draw(batch);
+            Wiskers[2].Draw(batch);
 
-            batch.Draw(_rectangleSprite.Texture,
-                               _rectangle.Position * 100, null,
-                               Color.White, _rectangle.Rotation, _rectangleSprite.Origin, 1f,
+            batch.Draw(Sprite.Texture,
+                               circle.Position * 100, null,
+                               Color.White, circle.Rotation, Sprite.Origin, 1f,
                                SpriteEffects.None, 0f);
-            info.ChangeText("" + Level);
-            //info.Draw(batch);
+
+            batch.Draw(Sprite.Texture,
+                   circle.Position * 100, null,
+                   Color.White, circle.Rotation, Sprite.Origin, .1f,
+                   SpriteEffects.None, 0f);
+
         }
     }
 }
-
-/*
- * 
-        protected bool SearchAreaAS()
-        {
-            int i = Globals.rand.Next(10);
-            MoveConflict currConflicct;
-            BaseMonster mon = GetSensed();
-
-            if (i <= 7)
-                currConflicct = MoveStep();
-            else
-            {
-                moveDir = moveDir.Flip().Times(Globals.rand.Next(2) * 2 - 1);
-                currConflicct = MoveStep();
-            }
-            if (currConflicct != MoveConflict.None)
-            {
-                Vector2 temp = moveDir;
-                while (temp == moveDir)
-                    temp = GetRandDir();
-                moveDir = temp;
-                currConflicct = MoveStep();
-            }
-            return false;
-        }
- * 
- * 
- * 
-         public bool FindAndActState()
-        {
-            if (TimeInState < 10 && target == null)
-            {
-                StateStack.Add(SearchAreaAS);
-            }
-            else if (target != null) 
-            {
-                //check world
-                MoveConflict con;
-                BaseMonster mon = SenseTouch(5, EvaluateWant);
-                if (mon != null)
-                {
-                    target = mon;
-                    StateStack.RemoveAt(StateStack.Count - 1);
-                    return true;
-                }
-                mon = SenseVision(3, EvaluateWant);
-                if (mon != null)
-                {
-                    target = mon;
-                    StateStack.RemoveAt(StateStack.Count - 1);
-                    return true;
-                }
-                MoveToward(target.GridPos);
-                con = MoveStep();
-                if (con == MoveConflict.Monster)
-                {
-                    mon = Globals.Mobs.GetMobAt(GridPos + moveDir);
-                    if (target == mon && DesiredAction(mon))
-                    {
-                        target = null;
-                        StateStack.RemoveAt(StateStack.Count - 1);
-                        return true;
-                    }
-                }
-                else if (MoveConflict.Wall == con)
-                {
-                    target = null;
-                    StateStack.RemoveAt(StateStack.Count - 1);
-                }
-            } 
-            else
-            {
-                path = null;
-                StateStack.RemoveAt(StateStack.Count - 1);
-               // StateStack.Add(FindNewRegionAS);
-            }
-            return false;
-        }
- 
- 
- */

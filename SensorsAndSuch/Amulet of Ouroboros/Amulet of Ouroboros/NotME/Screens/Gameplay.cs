@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using Amulet_of_Ouroboros.Sprites;
 using Amulet_of_Ouroboros.Texts;
-using TiledLib;
 using Amulet_of_Ouroboros.Maps;
 using Amulet_of_Ouroboros.Mobs;
 using FarseerPhysics.SamplesFramework;
@@ -49,6 +48,7 @@ namespace Amulet_of_Ouroboros.Screens
         Button storyContinueButton;
         #endregion
 
+        //public InputHelper input;
         int tick = 0;
         GraphicsDevice Device;
         public Gameplay(Game game, SpriteBatch batch, ChangeScreen changeScreen, GraphicsDeviceManager graphics, GraphicsDevice Device)
@@ -72,13 +72,12 @@ namespace Amulet_of_Ouroboros.Screens
             base.LoadContent(content);
             World.Gravity = new Vector2(0f, 0f);
             background = new Background(content, "Images/GameplayBackground");
-
             Globals.SetGeneral(content, Device, World);
             Globals.AssetCreatorr.LoadContent(content);
             Globals.SetLevelSpecific(new MobManager(), new RandomMap());
-            player = new Player(content);
+            player = new Player(content, Globals.map.GetRandomFreePos());
             Globals.player = player;
-            Globals.Mobs.AddPlayer(player);
+            //Globals.Mobs.AddPlayer(player);
             for (int i = 0; i < 0; i++)
                 Globals.Mobs.AddMonster(BaseMonster.MonTypes.Snake, Globals.map.GetRandomFreePos());
             for (int i = 0; i < 0; i++)
@@ -311,42 +310,32 @@ namespace Amulet_of_Ouroboros.Screens
         private void GameplayTurnCheck()
         {
             ++tick;
-            if (tick % 2 == 0){
+            if (tick % 2 == 0)
+            {
                UpdateAll();
             }
-            player.UpdatePosition();
-            HUDPlayerInfo.Update(player);
 
-            if (input.PreviousMouseState.LeftButton == ButtonState.Pressed && input.CheckMouseRelease(leftButton))
+            //HUDPlayerInfo.Update(player);
+
+            if (Inputs.Input.CurrentKeyboardState.IsKeyDown(Keys.A))
             {
-                if (player.MakeMove(player.GridPos.X - 1, player.GridPos.Y ))
-                    UpdateAll();
+                player.TakeTurn(Player.MoveOpt.RIGHT);
             }
-            else if (input.PreviousMouseState.LeftButton == ButtonState.Pressed && input.CheckMouseRelease(rightButton) )
+            if (Inputs.Input.CurrentKeyboardState.IsKeyDown(Keys.D))
             {
-                if (player.MakeMove(player.GridPos.X + 1, player.GridPos.Y))
-                    UpdateAll();
+                player.TakeTurn(Player.MoveOpt.LEFT);
             }
-            else if (input.PreviousMouseState.LeftButton == ButtonState.Pressed && input.CheckMouseRelease(upButton))
+            if (Inputs.Input.CurrentKeyboardState.IsKeyDown(Keys.W))
             {
-                if (player.MakeMove(player.GridPos.X, player.GridPos.Y - 1))
-                    UpdateAll();
+                player.TakeTurn(Player.MoveOpt.FORWARD);
             }
-            else if (input.PreviousMouseState.LeftButton == ButtonState.Pressed && input.CheckMouseRelease(downButton) )
+            if (Inputs.Input.CurrentKeyboardState.IsKeyDown(Keys.S))
             {
-                if (player.MakeMove(player.GridPos.X, player.GridPos.Y + 1))
-                    UpdateAll();
+                
+                player.TakeTurn(Player.MoveOpt.BACK);
             }
-            else if (input.PreviousMouseState.LeftButton == ButtonState.Pressed && input.CheckMouseRelease(attackButton))
-            {
-                player.Warp();
-            }
-            else if (input.PreviousMouseState.LeftButton == ButtonState.Pressed || input.CheckMouseRelease(skipButton))
-            {
-                //player.Rest();
-                //UpdateAll();
-            }
-            Globals.Mobs.Update(input);
+            player.TakeTurn(Player.MoveOpt.NONE);
+            //Globals.Mobs.Update(input);
         }
 
         private void UpdateAll() {

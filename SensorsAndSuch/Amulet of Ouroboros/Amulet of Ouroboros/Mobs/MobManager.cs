@@ -47,7 +47,7 @@ namespace Amulet_of_Ouroboros.Mobs
             //if (monType == BaseMonster.MonTypes.Snake)
                 //Monsters[i] = new Snake(gridPos, i, level);
             //else if (monType == BaseMonster.MonTypes.Boar)
-                Monsters[i] = new BadGuy(gridPos, i, level);
+                Monsters[i] = new BadGuy(gridPos, i);
             return true;
         }
 
