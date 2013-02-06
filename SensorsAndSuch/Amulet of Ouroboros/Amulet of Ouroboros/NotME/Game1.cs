@@ -15,6 +15,7 @@ namespace Amulet_of_Ouroboros
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        SpriteFont debugFont;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         ScreenStateSwitchboard screen;
@@ -39,8 +40,9 @@ namespace Amulet_of_Ouroboros
 
         protected override void LoadContent()
         {
+            debugFont = Content.Load<SpriteFont>("Fonts/debugFont");
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            
             screen = new ScreenStateSwitchboard(this, spriteBatch, graphics, GraphicsDevice);
         }
 

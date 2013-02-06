@@ -24,6 +24,7 @@ namespace Amulet_of_Ouroboros.Maps
         protected Texture2D texture;
         public Color color = Color.White;
         public Color? adjColor = null;
+        public SpriteFont font;
 
         #region for diffrent algorythems
         public bool hit = false;
@@ -35,6 +36,7 @@ namespace Amulet_of_Ouroboros.Maps
         protected Vector2 CurrentPos;
         public BaseTile(string tex, Vector2 GridPos)
         {
+            font = Globals.content.Load<SpriteFont>("Fonts/debugFont");
             texture = Globals.content.Load<Texture2D>(tex);
             this.GridPos = GridPos;
             CurrentPos = new Vector2(0, 0);

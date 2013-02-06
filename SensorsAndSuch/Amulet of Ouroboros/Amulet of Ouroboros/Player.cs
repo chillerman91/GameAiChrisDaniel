@@ -17,7 +17,7 @@ namespace Amulet_of_Ouroboros.Sprites
             NONE
         }
         public Player(ContentManager content, Vector2 GridPos)
-            : base(GridPos, Color.Wheat, 0)
+            : base(GridPos, Color.Wheat, 0, FarseerPhysics.Dynamics.BodyType.Dynamic)
         {
             texture = content.Load<Texture2D>("Images/PlayerPiece");
         }
@@ -31,13 +31,13 @@ namespace Amulet_of_Ouroboros.Sprites
             {
                 case MoveOpt.LEFT:
                     {
-                        if (circle.AngularVelocity <30)
+                        if (circle.AngularVelocity <35)
                             circle.ApplyTorque((.1f) / 100f);
                         break;
                     }
                 case MoveOpt.RIGHT:
                     {
-                        if (circle.AngularVelocity > -30)
+                        if (circle.AngularVelocity > -35)
                             circle.ApplyTorque((-.1f) / 100f);
                         break;
                     }
@@ -52,6 +52,19 @@ namespace Amulet_of_Ouroboros.Sprites
                         break;
                     }
             }
+        }
+
+        public override void Draw(SpriteBatch batch)
+        {
+            DrawText(batch);
+
+            base.Draw(batch);
+        }
+
+        public void DrawText(SpriteBatch batch)
+        {
+            string text = string.Format("Wisker Distances: [0]={0}, [1]={1}, [2]={2}", Wiskers[0].Distance, Wiskers[1].Distance, Wiskers[2].Distance);
+            batch.DrawString(font, text, new Vector2(BaseTile.TileWidth, BaseTile.TileHeight * Globals.map.MapHeight * (float)0.95), Color.AliceBlue);
         }
 
         public void CreatePlayer(int clas, string name)

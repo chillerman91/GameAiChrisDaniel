@@ -24,13 +24,15 @@ namespace Amulet_of_Ouroboros.Mobs
         protected Body circle;
         private FarseerPhysics.SamplesFramework.Sprite Sprite;
 
-        protected Wisker[] Wiskers = new Wisker[3];
+        protected static int wiskerNumber = 3;
+        protected Wisker[] Wiskers = new Wisker[wiskerNumber];
+
         public BadGuy(Vector2 GridPos, int id)
-            : this (GridPos, Color.ForestGreen, id)
+            : this (GridPos, Color.ForestGreen, id, BodyType.Dynamic)
         {
         }
         public override void Kill() { }
-        public BadGuy(Vector2 GridPos, Color color, int id)
+        public BadGuy(Vector2 GridPos, Color color, int id, BodyType bodType)
             : base("mobs/Boar", GridPos, "Snake" + id, GetRandDir(), 15, 0, id)
         {
 
@@ -41,27 +43,25 @@ namespace Amulet_of_Ouroboros.Mobs
                                                                                 MaterialType.Squares,
                                                                                 color, 1f));
             //_rectangle.FixtureList[0].IsSensor = true;
-            circle.LinearDamping = 2;
-            circle.AngularDamping = 5;
+            circle.LinearDamping = (float)1.5;
+            circle.AngularDamping = (float)5;
             //new FarseerPhysics.SamplesFramework.Sprite(texture);
-            circle.BodyType = BodyType.Dynamic;
+            circle.BodyType = bodType;
             int i = 0;
             circle.Position = GridPos / 4f;
             circle.Friction = 0.0f;
 
             Wiskers[0] = new Wisker(attatched: circle, offSet: 0, WiskerLength: .32f);
-
             Wiskers[1] = new Wisker(attatched: circle, offSet: (float)Math.PI / 4f, WiskerLength: .32f);
             Wiskers[2] = new Wisker(attatched: circle, offSet: (float)Math.PI / -4f, WiskerLength: .32f);
         }
 
         public override void TakeTurn()
         {
-
             float ret = Wiskers[0].Update();
-
             float ret1 = Wiskers[1].Update();
             float ret2 = Wiskers[2].Update();// +(Globals.rand.Next((int)4) - 2) / 10f;
+
             float range = (1 - ret) * 30 + 2;
             // (Globals.rand.Next((int) range) - range/2) / 500f
             circle.ApplyTorque((float) (ret1 - ret2)/100f);
@@ -72,7 +72,7 @@ namespace Amulet_of_Ouroboros.Mobs
             else
             {
                  circle.ApplyAngularImpulse((.1f) / 100f);
-                circle.ApplyForce(circle.Rotation.GetVecFromAng() * -2 * speed, circle.Position);
+                 circle.ApplyForce(circle.Rotation.GetVecFromAng() * -2 * speed, circle.Position);
             }
             
         }

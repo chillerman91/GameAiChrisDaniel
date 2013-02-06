@@ -45,10 +45,9 @@ namespace Amulet_of_Ouroboros.Mobs
 
         public int MaxHealth = 20;
         //public int NutVal = 10;
-        protected float speed = .02f;
+        protected float speed = .025f;
         protected Vector2 Dir;
         protected Vector2 CurrentGridPos;
-
 
         public BaseMonster(string tex, Vector2 GridPos, string Name, Vector2 moveDir, int NutVal, int Age, int id)
             :base (tex, GridPos)
@@ -94,7 +93,6 @@ namespace Amulet_of_Ouroboros.Mobs
         {
             return true; // AttackMon(Globals.Mobs.GetMobAt(attackPos));
         }
-
 
         public virtual bool Listen(BaseMonster mon)
         {

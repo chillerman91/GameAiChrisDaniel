@@ -14,13 +14,32 @@ namespace Amulet_of_Ouroboros.Maps
 
     public class RandomMap
     {
-        private static int MapWidth = 40;
-        private static int MapHeight = 30;
+        #region Datafields
+
+        private static int _mapWidth = 40;
+        private static int _mapHeight = 30;
 
         private static int startX = 20;
         private static int startY = 20;
 
         List<BaseTile>[,] grid;
+        #endregion
+
+        #region Properties
+
+        public int MapWidth
+        {
+            get { return _mapWidth; }
+        }
+
+        public int MapHeight
+        {
+            get { return _mapHeight; }
+        }
+
+        #endregion
+
+        #region Methods
 
         public bool isFree(int i, int j)
         {
@@ -290,6 +309,7 @@ namespace Amulet_of_Ouroboros.Maps
             if (grid[i, j].Count != 1) return GetRandomFreePos();
             return new Vector2(i, j);
         }
+
         public List<List<BaseTile>> GetAdjColums(int i, int j) 
         {
             List<List<BaseTile>> adj = new List<List<BaseTile>>();
@@ -514,5 +534,7 @@ namespace Amulet_of_Ouroboros.Maps
                 }
             }
         }
+
+        #endregion
     }
 }

@@ -21,12 +21,27 @@ namespace Amulet_of_Ouroboros.Mobs
 {
     public class Wisker
     {
+        #region Datafields
+
         float WiskerR;
         Texture2D texture;
         Body attatchedTo;
         Color color;
         Color defaultC = Color.White;
         float OffSet;
+        private float distance;
+
+        #endregion
+
+        #region Properties
+
+        public float Distance
+        {
+            get { return distance; }
+        }
+
+        #endregion
+
         public Wisker(Body attatched, float offSet, float WiskerLength)
         {
             texture = Globals.content.Load<Texture2D>("Sensors/Wisker");
@@ -38,22 +53,22 @@ namespace Amulet_of_Ouroboros.Mobs
 
         public float Update()
         {
-            float ret = 1;
+            distance = 1;
 
             Globals.World.RayCast((fixture, point, normal, fraction) =>
             {
                 if (fixture != null)
                 {
-                    ret = fraction;
+                    distance = fraction;
                     return 1;
                 }
                 return fraction;
             }
             , attatchedTo.Position, attatchedTo.Position + (attatchedTo.Rotation + OffSet).GetVecFromAng() * WiskerR * .16f);
-            System.Diagnostics.Debug.WriteLine(ret);
-            int r =(int) (240*(ret-.3)/.7f) + 10;
+            System.Diagnostics.Debug.WriteLine(distance);
+            int r = (int)(240 * (distance - .3) / .7f) + 10;
             color = new Color(255-r, r, 0);
-            return ret;
+            return distance;
         }
 
         public void Draw(SpriteBatch batch)

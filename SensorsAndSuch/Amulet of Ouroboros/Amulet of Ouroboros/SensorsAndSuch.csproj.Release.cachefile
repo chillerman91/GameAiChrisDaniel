@@ -20,9 +20,10 @@ Content\Tiles\dirt.xnb
 Content\Tiles\Wall.xnb
 Content\Mobs\Boar.xnb
 Content\Sensors\Wisker.xnb
-Content\Fonts\buttonFont.xnb
 Content\Fonts\scoreFont.xnb
 Content\Fonts\screenFont.xnb
+Content\Fonts\buttonFont.xnb
+Content\Fonts\debugFont.xnb
 Content\Materials\blank.xnb
 Content\Common\gradient.xnb
 Content\Common\logo.xnb
