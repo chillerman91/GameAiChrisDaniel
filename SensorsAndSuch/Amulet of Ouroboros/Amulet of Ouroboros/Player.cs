@@ -65,7 +65,7 @@ namespace Amulet_of_Ouroboros.Sprites
         public void DrawText(SpriteBatch batch)
         {
             string text = string.Format("Wisker Distances: [0]={0}, [1]={1}, [2]={2}", Wiskers[0].Distance, Wiskers[1].Distance, Wiskers[2].Distance);
-            batch.DrawString(font, text, new Vector2(BaseTile.TileWidth, BaseTile.TileHeight * Globals.map.MapHeight * (float)0.95), Color.AliceBlue);
+            batch.DrawString(font, text, this.CurrentGridPos, Color.AliceBlue);//new Vector2(BaseTile.TileWidth, BaseTile.TileHeight * Globals.map.MapHeight * (float)0.95), Color.AliceBlue);
         }
 
         public void CreatePlayer(int clas, string name)
