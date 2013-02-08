@@ -44,7 +44,7 @@ namespace Amulet_of_Ouroboros.Mobs
                                                                                 color, 1f));
             //rectangle.FixtureList[0].IsSensor = true;
             circle.LinearDamping = 1.5f;
-            circle.AngularDamping = 2f;
+            circle.AngularDamping = 3f;
             //new FarseerPhysics.SamplesFramework.Sprite(texture);
             circle.BodyType = bodType;
             int i = 0;
@@ -66,9 +66,13 @@ namespace Amulet_of_Ouroboros.Mobs
             float range = (1 - ret) * 30 + 2;
             // (Globals.rand.Next((int) range) - range/2) / 500f
             circle.ApplyTorque((float) (ret1 - ret2)/100f);
-            if (ret > .32 && (ret1 > .45 || ret2> .45))
+            if (ret > .32 && ret1 > .45)
             {
-                circle.ApplyForce(circle.Rotation.GetVecFromAng() * speed, circle.Position);
+                circle.ApplyForce(circle.Rotation.GetVecFromAng() * speed * ret1, circle.Position);
+            }
+            else if (ret > .32 && ret2 > .45)
+            {
+                circle.ApplyForce(circle.Rotation.GetVecFromAng() * speed * ret2 * -1, circle.Position);
             }
             else
             {
