@@ -9,27 +9,21 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Amulet_of_Ouroboros.Screens;
-using FarseerPhysics.SamplesFramework;
 
 namespace Amulet_of_Ouroboros
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        SpriteFont debugFont;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         ScreenStateSwitchboard screen;
-        public ScreenManager ScreenManager { get; set; }
 
         public Game1()
         {
-
-            Window.Title = "The Sensor Game";
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 1024;
             graphics.PreferredBackBufferHeight = 768;
             Content.RootDirectory = "Content";
-            Globals.ScreenManager = ScreenManager;
         }
 
         protected override void Initialize()
@@ -40,10 +34,8 @@ namespace Amulet_of_Ouroboros
 
         protected override void LoadContent()
         {
-            debugFont = Content.Load<SpriteFont>("Fonts/buttonFont");
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-            screen = new ScreenStateSwitchboard(this, spriteBatch, graphics, GraphicsDevice);
+            screen = new ScreenStateSwitchboard(this, spriteBatch, graphics);
         }
 
         protected override void UnloadContent()

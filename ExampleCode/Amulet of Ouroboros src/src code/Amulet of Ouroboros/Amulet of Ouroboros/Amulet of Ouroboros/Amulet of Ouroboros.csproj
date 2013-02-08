@@ -83,36 +83,33 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Net" />
+    <Reference Include="TiledLib">
+      <HintPath>..\..\TiledLib\TiledLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mobs\Sensors\CircleSensor.cs" />
-    <Compile Include="Mobs\Sensors\Wisker.cs" />
-    <Compile Include="NotME\Background.cs" />
-    <Compile Include="Extends.cs" />
-    <Compile Include="FrameWork\SensorScreen.cs" />
-    <Compile Include="Globals.cs" />
-    <Compile Include="Mobs\Monsters\BadGuy.cs" />
-    <Compile Include="Map\Tiles\Wall.cs" />
-    <Compile Include="Map\Tiles\Dirt.cs" />
-    <Compile Include="Map\BaseTile.cs" />
-    <Compile Include="Map\RandomMap.cs" />
-    <Compile Include="NotME\Inputs\GameInput.cs" />
-    <Compile Include="NotME\Inputs\Input.cs" />
-    <Compile Include="Mobs\BaseMonster.cs" />
-    <Compile Include="Mobs\MobManager.cs" />
-    <Compile Include="NotME\Screens\ChangeScreen.cs" />
-    <Compile Include="NotME\Screens\ScreenStateSwitchboard.cs" />
-    <Compile Include="NotME\Sprites\Sprite.cs" />
+    <Compile Include="Audio\Music.cs" />
+    <Compile Include="Audio\SoundEffects.cs" />
+    <Compile Include="Background.cs" />
+    <Compile Include="Inputs\GameInput.cs" />
+    <Compile Include="Inputs\Input.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="NotME\Game1.cs" />
-    <Compile Include="Gameplay.cs" />
-    <Compile Include="NotME\Screens\Menu\HUD.cs" />
-    <Compile Include="NotME\Screens\Screen.cs" />
-    <Compile Include="NotME\Screens\Title.cs" />
-    <Compile Include="NotME\Sprites\Button.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="NotME\Text.cs" />
+    <Compile Include="Game1.cs" />
+    <Compile Include="Screens\Gameover.cs" />
+    <Compile Include="Screens\Gameplay.cs" />
+    <Compile Include="Screens\Gamewin.cs" />
+    <Compile Include="Screens\HUD.cs" />
+    <Compile Include="Screens\Options.cs" />
+    <Compile Include="Screens\Screen.cs" />
+    <Compile Include="Screens\ScreenStateSwitchboard.cs" />
+    <Compile Include="Screens\Title.cs" />
+    <Compile Include="Sprites\Boss.cs" />
+    <Compile Include="Sprites\Button.cs" />
+    <Compile Include="Sprites\Minion.cs" />
+    <Compile Include="Sprites\Player.cs" />
+    <Compile Include="Sprites\Sprite.cs" />
+    <Compile Include="Text.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
@@ -121,18 +118,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Farseer Physics Engine 3.3.1 Samples XNA%282%29\Farseer Physics Engine 3.3.1 Samples XNA\Farseer Physics Engine 3.3 XNA\Farseer Physics XNA.csproj">
-      <Project>{0A850700-1ABB-4288-A391-6726B90EBEB9}</Project>
-      <Name>Farseer Physics XNA</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Farseer Physics Engine 3.3.1 Samples XNA%282%29\Farseer Physics Engine 3.3.1 Samples XNA\Samples XNA\Samples XNA\Samples XNA.csproj">
-      <Project>{1681ADA2-B2F3-4157-A603-82C742379856}</Project>
-      <Name>Samples XNA</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Amulet of OuroborosContent\SensorsAndSuchContent.contentproj">
-      <Name>SensorsAndSuchContent %28Content%29</Name>
+    <ProjectReference Include="..\Amulet of OuroborosContent\Amulet of OuroborosContent.contentproj">
+      <Name>Amulet_of_OuroborosContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
-      <Project>{691F832B-08FF-4F45-92F3-9E6E60D75480}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

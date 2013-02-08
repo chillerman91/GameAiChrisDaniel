@@ -27,23 +27,24 @@ namespace Amulet_of_Ouroboros.Sprites
             float ret = Wiskers[0].Update();
             float ret1 = Wiskers[1].Update();
             float ret2 = Wiskers[2].Update();
+            CircleSensor.Update();
             switch (Opt)
             {
                 case MoveOpt.LEFT:
                     {
-                        if (circle.AngularVelocity <35)
-                            circle.ApplyTorque((.1f) / 100f);
+                        if (circle.AngularVelocity < 70)
+                            circle.ApplyTorque((.5f) / 100f);
                         break;
                     }
                 case MoveOpt.RIGHT:
                     {
-                        if (circle.AngularVelocity > -35)
-                            circle.ApplyTorque((-.1f) / 100f);
+                        if (circle.AngularVelocity > -70)
+                            circle.ApplyTorque((-.5f) / 100f);
                         break;
                     }
                 case MoveOpt.FORWARD:
                     {
-                        circle.ApplyForce(circle.Rotation.GetVecFromAng() * speed, circle.Position);
+                        circle.ApplyForce(circle.Rotation.GetVecFromAng() * speed * 2, circle.Position);
                         break;
                     }
                 case MoveOpt.BACK:
@@ -74,7 +75,7 @@ namespace Amulet_of_Ouroboros.Sprites
 
         internal void Warp()
         {
-            GridPos = Globals.map.GetRandomFreePos();
+            circle.Position = Globals.map.GetRandomFreePos() * TileHeight / 100f;
         }
 
         internal void Rest()

@@ -18,35 +18,7 @@ namespace Amulet_of_Ouroboros.Screens
         Background background;
         HUDPlayerInfo HUDPlayerInfo;
         Player player;
-        Button leftButton;
-        Button rightButton;
-        Button upButton;
-        Button downButton;
 
-        Button attackButton;
-        Button skipButton;
-        Button potionButton;
-
-        #region Pregame
-        int charAmt;
-        char[] enteredName;
-        bool playerCreated;
-        KeyboardState currentState;
-        char keydown;
-        Texture2D textenterbox;
-        Text enterplayernameText;
-        bool nameComplete;
-        Text playername;
-        Button confirmnameButton;
-        Text chooseclasstext;
-        Button paladinButton;
-        Button casterButton;
-        Button rogueButton;
-        bool classComplete;
-        Texture2D[] storytexts;
-        int storyCount;
-        Button storyContinueButton;
-        #endregion
 
         //public InputHelper input;
         int tick = 0;
@@ -55,16 +27,6 @@ namespace Amulet_of_Ouroboros.Screens
             : base(game, batch, changeScreen, graphics)
         {
             this.Device = Device;
-        }
-
-        protected override void SetupInputs()
-        {
-
-        }
-
-        public override void Activate()
-        {
-
         }
 
         protected override void LoadScreenContent(ContentManager content)
@@ -84,38 +46,13 @@ namespace Amulet_of_Ouroboros.Screens
                 Globals.Mobs.AddMonster(BaseMonster.MonTypes.Snake, Globals.map.GetRandomFreePos(), Globals.rand.Next(100) + 20);
             for (int i = 0; i < 10; i++)
                 Globals.Mobs.AddMonster(BaseMonster.MonTypes.Boar, Globals.map.GetRandomFreePos(), Globals.rand.Next(8) + 2);
-
-            HUDPlayerInfo = new HUDPlayerInfo(content, player);
-            leftButton = new Button(content, "", new Vector2(760, 705), Color.White, Color.White, "Images/LeftButton");
-            rightButton = new Button(content, "", new Vector2(940, 705), Color.White, Color.White, "Images/RightButton");
-            upButton = new Button(content, "", new Vector2(850, 650), Color.White, Color.White, "Images/UpButton");
-            downButton = new Button(content, "", new Vector2(850, 705), Color.White, Color.White, "Images/DownButton");
-
-            attackButton = new Button(content, "Warp", new Vector2(450, 705), Color.Blue, Color.White);
-            skipButton = new Button(content, "Skip", new Vector2(450, 650), Color.Blue, Color.White);
-            potionButton = new Button(content, "Potion", new Vector2(ScreenWidth / 2 + 220, 400), Color.Blue, Color.White);
         }
         private Boolean GameStart = false;
         protected override void UpdateScreen(GameTime gameTime, DisplayOrientation displayOrientation)
         {
 
             base.Update(gameTime);
-            //if (player.CurrentHP < 1)
-            //{
-            //    changeScreenDelegate(ScreenState.GameOver);
-            //    this.LoadScreenContent(content);
-            //}
-
-            if (GameStart)
-            {
-              GameplayTurnCheck();
-            }
-            else
-            {
-                  player.CreatePlayer(0, "Shadow Regulus");
-                  playerCreated = true;
-                  GameStart = true;
-           }
+            GameplayTurnCheck();
         }
 
         private void GameplayTurnCheck()
@@ -143,6 +80,10 @@ namespace Amulet_of_Ouroboros.Screens
             if (Inputs.Input.CurrentKeyboardState.IsKeyDown(Keys.S))
             {
                 player.TakeTurn(Player.MoveOpt.BACK);
+            } 
+            if (Inputs.Input.CurrentKeyboardState.IsKeyDown(Keys.R))
+            {
+                player.Warp();
             }
             player.TakeTurn(Player.MoveOpt.NONE);
 
@@ -167,11 +108,6 @@ namespace Amulet_of_Ouroboros.Screens
             //rightButton.Draw(batch);
             //upButton.Draw(batch);
             //downButton.Draw(batch);
-        }
-
-        public void PlaceBadGuy(EventArgs e)
-        {
-
         }
     }
 }

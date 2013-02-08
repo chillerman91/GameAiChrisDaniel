@@ -45,7 +45,7 @@ namespace Amulet_of_Ouroboros.Mobs
 
         public int MaxHealth = 20;
         //public int NutVal = 10;
-        protected float speed = .025f;
+        protected float speed = .15f;
         protected Vector2 Dir;
         protected Vector2 CurrentGridPos;
 

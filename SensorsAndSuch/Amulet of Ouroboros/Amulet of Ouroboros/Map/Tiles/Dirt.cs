@@ -9,7 +9,6 @@ namespace Amulet_of_Ouroboros.Maps
 {
     public class Dirt: BaseTile
     {
-
         public Dirt(Vector2 GridPos)
             :base ("Tiles/dirt", GridPos)
         {

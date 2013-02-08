@@ -14,16 +14,13 @@ namespace Amulet_of_Ouroboros.Maps
 
     public class RandomMap
     {
-        #region Datafields
-
-        private static int _mapWidth = 40;
-        private static int _mapHeight = 30;
+        private static int _mapWidth = 20;
+        private static int _mapHeight = 20;
 
         private static int startX = 20;
         private static int startY = 20;
 
         List<BaseTile>[,] grid;
-        #endregion
 
         #region Properties
 
@@ -269,6 +266,7 @@ namespace Amulet_of_Ouroboros.Maps
         }
 
         #region Get Tiles or columns
+
         private BaseTile GetTileBase(int i, int j)
         {
             if (i < 0 || i >= MapWidth) return null;
@@ -507,14 +505,14 @@ namespace Amulet_of_Ouroboros.Maps
             }
         }
         
-        public Vector2 TranslateToPos(Vector2 gridIndex)
+        public Vector2 TranslateToPos(Vector2 farseerPos)
         {
             Player player= Globals.player;
-            Vector2 temp = new Vector2(((int)player.GridPos.X)/30, ((int)player.GridPos.Y)/30).Times(30);
+            Vector2 temp = new Vector2(((int)player.circle.Position.X) / 7, ((int)player.circle.Position.Y) / 7).Times(7);
             //gridIndex = gridIndex - player.GridPos + new Vector2(20, 15);
-            gridIndex = gridIndex - temp;// +new Vector2(20, 15);
+            temp = farseerPos - temp;// +new Vector2(20, 15);
 
-            return new Vector2(gridIndex.X * BaseTile.TileWidth + startX, gridIndex.Y * BaseTile.TileHeight + startY);
+            return temp * 100f;
         }
 
         internal void Update()

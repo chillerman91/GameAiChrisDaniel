@@ -17,8 +17,8 @@ namespace Amulet_of_Ouroboros.Maps
             Wall,
             None
         }
-        public static int TileWidth = 26;
-        public static int TileHeight = 26;
+        public static int TileWidth = 50;
+        public static int TileHeight = 50;
         public static int DistBetween = 30;
         public Vector2 GridPos;
         protected Texture2D texture;
@@ -36,7 +36,7 @@ namespace Amulet_of_Ouroboros.Maps
         protected Vector2 CurrentPos;
         public BaseTile(string tex, Vector2 GridPos)
         {
-            font = Globals.content.Load<SpriteFont>("Fonts/debugFont");
+            font = Globals.content.Load<SpriteFont>("Fonts/buttonFont");
             texture = Globals.content.Load<Texture2D>(tex);
             this.GridPos = GridPos;
             CurrentPos = new Vector2(0, 0);
@@ -58,15 +58,6 @@ namespace Amulet_of_Ouroboros.Maps
             return newPos;
         }
 
-
-        public float TranslateVecToRadians(Vector2 vec) 
-        {
-            if (vec.IEquals(1, 0)) return MathHelper.Pi / 2;
-            if (vec.IEquals(-1, 0)) return -MathHelper.Pi / 2;
-            if (vec.IEquals(0, -1)) return (float) 0;
-            return MathHelper.Pi;
-            
-        }
 
         public virtual void Draw(SpriteBatch batch)
         {

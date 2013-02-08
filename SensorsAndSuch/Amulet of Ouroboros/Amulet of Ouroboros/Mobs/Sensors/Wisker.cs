@@ -50,7 +50,7 @@ namespace Amulet_of_Ouroboros.Mobs
             OffSet = offSet;
             color = defaultC;
         }
-
+        public Vector2 pt;
         public float Update()
         {
             distance = 1;
@@ -59,8 +59,9 @@ namespace Amulet_of_Ouroboros.Mobs
             {
                 if (fixture != null)
                 {
+                    pt = point;
                     distance = fraction;
-                    return 1;
+                    //return 1;
                 }
                 return fraction;
             }
@@ -74,7 +75,7 @@ namespace Amulet_of_Ouroboros.Mobs
         public void Draw(SpriteBatch batch)
         {
             batch.Draw(texture,
-               (attatchedTo.Position ) * 100, null,
+               Globals.map.TranslateToPos(attatchedTo.Position ), null,
                color, attatchedTo.Rotation + OffSet, new Vector2(texture.Width / 2, texture.Height / 2), WiskerR,
                SpriteEffects.None, 0f);
         }

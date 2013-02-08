@@ -21,12 +21,12 @@ namespace Amulet_of_Ouroboros.Mobs
 {
     public class BadGuy : BaseMonster
     {
-        protected Body circle;
+        public Body circle;
         private FarseerPhysics.SamplesFramework.Sprite Sprite;
 
         protected static int wiskerNumber = 3;
         protected Wisker[] Wiskers = new Wisker[wiskerNumber];
-
+        protected CircleSensor CircleSensor;
         public BadGuy(Vector2 GridPos, int id)
             : this (GridPos, Color.ForestGreen, id, BodyType.Dynamic)
         {
@@ -36,24 +36,25 @@ namespace Amulet_of_Ouroboros.Mobs
             : base("mobs/Boar", GridPos, "Snake" + id, GetRandDir(), 15, 0, id)
         {
 
-            //_rectangle = BodyFactory.CreateRectangle(Globals.World, width: TileWidth / 200f, height: TileHeight / 200f, density: 1f);
+            //rectangle = BodyFactory.CreateRectangle(Globals.World, width: TileWidth / 200f, height: TileHeight / 200f, density: 1f);
 
-            circle = BodyFactory.CreateCircle(Globals.World, radius: TileWidth / 300f, density: 1f);
+            circle = BodyFactory.CreateCircle(Globals.World, radius: .14f, density: 1f);
             Sprite = new FarseerPhysics.SamplesFramework.Sprite(Globals.AssetCreatorr.TextureFromShape(circle.FixtureList[0].Shape,
                                                                                 MaterialType.Squares,
                                                                                 color, 1f));
-            //_rectangle.FixtureList[0].IsSensor = true;
-            circle.LinearDamping = (float)1.5;
-            circle.AngularDamping = (float)5;
+            //rectangle.FixtureList[0].IsSensor = true;
+            circle.LinearDamping = 1.5f;
+            circle.AngularDamping = 2f;
             //new FarseerPhysics.SamplesFramework.Sprite(texture);
             circle.BodyType = bodType;
             int i = 0;
-            circle.Position = GridPos / 4f;
+            circle.Position = GridPos * TileWidth / 100f;
             circle.Friction = 0.0f;
 
-            Wiskers[0] = new Wisker(attatched: circle, offSet: 0, WiskerLength: .32f);
-            Wiskers[1] = new Wisker(attatched: circle, offSet: (float)Math.PI / 4f, WiskerLength: .32f);
-            Wiskers[2] = new Wisker(attatched: circle, offSet: (float)Math.PI / -4f, WiskerLength: .32f);
+            Wiskers[0] = new Wisker(attatched: circle, offSet: 0, WiskerLength: 1f);
+            Wiskers[1] = new Wisker(attatched: circle, offSet: (float)Math.PI / 4f, WiskerLength: 1f);
+            Wiskers[2] = new Wisker(attatched: circle, offSet: (float)Math.PI / -4f, WiskerLength: 1f);
+            CircleSensor = new CircleSensor(attatched: circle, color: Color.Green);
         }
 
         public override void TakeTurn()
@@ -61,7 +62,7 @@ namespace Amulet_of_Ouroboros.Mobs
             float ret = Wiskers[0].Update();
             float ret1 = Wiskers[1].Update();
             float ret2 = Wiskers[2].Update();// +(Globals.rand.Next((int)4) - 2) / 10f;
-
+            CircleSensor.Update();
             float range = (1 - ret) * 30 + 2;
             // (Globals.rand.Next((int) range) - range/2) / 500f
             circle.ApplyTorque((float) (ret1 - ret2)/100f);
@@ -83,16 +84,11 @@ namespace Amulet_of_Ouroboros.Mobs
             Wiskers[1].Draw(batch);
             Wiskers[2].Draw(batch);
 
+            CircleSensor.Draw(batch);
             batch.Draw(Sprite.Texture,
-                               circle.Position * 100, null,
+                               Globals.map.TranslateToPos(circle.Position), null,
                                Color.White, circle.Rotation, Sprite.Origin, 1f,
                                SpriteEffects.None, 0f);
-
-            batch.Draw(Sprite.Texture,
-                   circle.Position * 100, null,
-                   Color.White, circle.Rotation, Sprite.Origin, .1f,
-                   SpriteEffects.None, 0f);
-
         }
     }
 }

@@ -19,33 +19,32 @@ namespace Amulet_of_Ouroboros.Maps
         {
         }
         */
-        Body _rectangle;
-        private FarseerPhysics.SamplesFramework.Sprite _rectangleSprite;
+        Body rectangle;
+        private FarseerPhysics.SamplesFramework.Sprite rectangleSprite;
 
         public Wall(Vector2 GridPos)
             : base("Tiles/Wall", GridPos)
         {
             //texture = Globals.content.Load<Texture2D>(tex);
-            this.GridPos = GridPos/4f;
+            this.GridPos = GridPos * TileWidth / 100f;
 
-            _rectangle = BodyFactory.CreateRectangle(Globals.World, width: TileWidth/100f, height: TileHeight/100f, density: 1f);
-            _rectangleSprite = new FarseerPhysics.SamplesFramework.Sprite(Globals.AssetCreatorr.TextureFromShape(_rectangle.FixtureList[0].Shape,
+            rectangle = BodyFactory.CreateRectangle(Globals.World, width: TileWidth/100f, height: TileHeight/100f, density: 5f);
+            rectangleSprite = new FarseerPhysics.SamplesFramework.Sprite(Globals.AssetCreatorr.TextureFromShape(rectangle.FixtureList[0].Shape,
                                                                     MaterialType.Squares,
                                                                     Color.Blue, 1f));
 
-            //_rectangle.BodyType = BodyType.Dynamic;
-            int i = 0;
-            _rectangle.Position = this.GridPos; //new Vector2(2, -2);//-13.0f + 1.282f * i);
-            _rectangle.Friction = 0.75f;
+            //rectangle.BodyType = BodyType.Dynamic;
+            rectangle.Position = this.GridPos; //new Vector2(2, -2);//-13.0f + 1.282f * i);
+            rectangle.Friction = 0.75f;
         }
 
         public override void Draw(SpriteBatch batch)
         {
             // CurrentPos = CurrentPos.Times(0) + Globals.map.TranslateToPos(GridPos); // .Times(.05);
             // batch.Draw(texture, new Rectangle((int)(CurrentPos).X, (int)(CurrentPos).Y, TileWidth, TileHeight), (Color)(adjColor == null ? color : adjColor));
-            batch.Draw(_rectangleSprite.Texture,
-                   _rectangle.Position * 100, null,
-                   Color.White, _rectangle.Rotation, _rectangleSprite.Origin, 1f,
+            batch.Draw(rectangleSprite.Texture,
+                   Globals.map.TranslateToPos(rectangle.Position), null,
+                   Color.White, rectangle.Rotation, rectangleSprite.Origin, 1f,
                    SpriteEffects.None, 0f);
         }
     }
