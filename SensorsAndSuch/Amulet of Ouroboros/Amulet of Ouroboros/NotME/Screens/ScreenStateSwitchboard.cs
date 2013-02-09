@@ -3,7 +3,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Amulet_of_Ouroboros.Screens
+namespace SensorsAndSuch.Screens
 {
     public enum ScreenState
     {

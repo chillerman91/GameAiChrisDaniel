@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Amulet_of_Ouroboros.Sprites;
+using SensorsAndSuch.Sprites;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace Amulet_of_Ouroboros.Maps
+namespace SensorsAndSuch.Maps
 {
     public class Dirt: BaseTile
     {

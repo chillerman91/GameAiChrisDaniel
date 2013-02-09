@@ -2,12 +2,12 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Amulet_of_Ouroboros.Sprites;
+using SensorsAndSuch.Sprites;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-using Amulet_of_Ouroboros.Texts;
+using SensorsAndSuch.Texts;
 using System;
-using Amulet_of_Ouroboros.Maps;
+using SensorsAndSuch.Maps;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.SamplesFramework;
@@ -18,7 +18,7 @@ using FarseerPhysics.Dynamics.Contacts;
 //magician: teleport: time warp
 //visible only when seen
 // invisible: seen with dust
-namespace Amulet_of_Ouroboros.Mobs
+namespace SensorsAndSuch.Mobs
 {
     public class CircleSensor
     {

@@ -1,14 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using Amulet_of_Ouroboros.Mobs;
-using Amulet_of_Ouroboros.Maps;
+using SensorsAndSuch.Mobs;
+using SensorsAndSuch.Maps;
 using Microsoft.Xna.Framework.Content;
-using Amulet_of_Ouroboros.Sprites;
+using SensorsAndSuch.Sprites;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.SamplesFramework;
 
-namespace Amulet_of_Ouroboros
+namespace SensorsAndSuch
 {
     static class Globals
     {

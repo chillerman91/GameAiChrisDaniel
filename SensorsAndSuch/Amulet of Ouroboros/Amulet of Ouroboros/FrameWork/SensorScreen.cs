@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FarseerPhysics.Dynamics;
-using Amulet_of_Ouroboros.Screens;
+using SensorsAndSuch.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using FarseerPhysics.Common;
@@ -13,7 +13,7 @@ using FarseerPhysics.Collision;
 using FarseerPhysics.Common.Decomposition;
 using Microsoft.Xna.Framework.Content;
 
-namespace Amulet_of_Ouroboros.FrameWork
+namespace SensorsAndSuch.FrameWork
 {
     class SensorScreen: Screen
     {

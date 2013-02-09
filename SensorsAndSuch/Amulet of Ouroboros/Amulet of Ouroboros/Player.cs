@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Amulet_of_Ouroboros.Maps;
-using Amulet_of_Ouroboros.Mobs;
+using SensorsAndSuch.Maps;
+using SensorsAndSuch.Mobs;
+using SensorsAndSuch.Screens;
 
-namespace Amulet_of_Ouroboros.Sprites
+namespace SensorsAndSuch.Sprites
 {
     public class Player : BadGuy
     {
@@ -16,10 +17,14 @@ namespace Amulet_of_Ouroboros.Sprites
             BACK,
             NONE
         }
+        HUDPlayerInfo HUD;
         public Player(ContentManager content, Vector2 GridPos)
-            : base(GridPos, Color.Wheat, 0, FarseerPhysics.Dynamics.BodyType.Dynamic)
+            : base(GridPos, Color.Purple, 0, FarseerPhysics.Dynamics.BodyType.Dynamic)
         {
-            texture = content.Load<Texture2D>("Images/PlayerPiece");
+        }
+        internal void SetThisHUD(HUDPlayerInfo HUD)
+        {
+            this.HUD = HUD;
         }
         public void TakeTurn(MoveOpt Opt)
         {
@@ -53,19 +58,18 @@ namespace Amulet_of_Ouroboros.Sprites
                         break;
                     }
             }
+            HUD.Update(string.Format("{0:F2}", ret2), string.Format("{0:F2}", ret), string.Format("{0:F2}", ret1));
         }
 
         public override void Draw(SpriteBatch batch)
         {
-            DrawText(batch);
+            SetHUDData(batch);
 
             base.Draw(batch);
         }
 
-        public void DrawText(SpriteBatch batch)
+        public void SetHUDData(SpriteBatch batch)
         {
-            string text = string.Format("Wisker Distances: [0]={0}, [1]={1}, [2]={2}", Wiskers[0].Distance, Wiskers[1].Distance, Wiskers[2].Distance);
-            batch.DrawString(font, text, this.CurrentGridPos, Color.AliceBlue);//new Vector2(BaseTile.TileWidth, BaseTile.TileHeight * Globals.map.MapHeight * (float)0.95), Color.AliceBlue);
         }
 
         public void CreatePlayer(int clas, string name)

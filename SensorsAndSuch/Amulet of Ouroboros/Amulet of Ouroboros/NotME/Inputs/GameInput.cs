@@ -2,20 +2,15 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Amulet_of_Ouroboros.Sprites;
+using SensorsAndSuch.Sprites;
 
-namespace Amulet_of_Ouroboros.Inputs
+namespace SensorsAndSuch.Inputs
 {
     class GameInput
     {
         Dictionary<string, Input> inputs = new Dictionary<string, Input>();
 
         public MouseState CurrentMouseState;
-        public MouseState PreviousMouseState;
-
-        public GameInput()
-        {
-        }
 
         public Input MyInput(string theAction)
         {
@@ -35,18 +30,7 @@ namespace Amulet_of_Ouroboros.Inputs
 
         public void EndUpdate()
         {
-            PreviousMouseState = CurrentMouseState;
             Input.EndUpdate();
-        }
-
-        public bool IsConnected(PlayerIndex thePlayer)
-        {
-            if (Input.GamepadConnectionState[thePlayer] == false)
-            {
-                return true;
-            }
-
-            return Input.IsConnected(thePlayer);
         }
 
         public bool IsPressed(string theAction,
@@ -68,73 +52,6 @@ namespace Amulet_of_Ouroboros.Inputs
                 return false;
             }
             return inputs[theAction].IsPressed(PlayerIndex.One);
-        }
-
-        public bool IsPressed(string theAction, PlayerIndex thePlayer)
-        {
-            if (inputs.ContainsKey(theAction) == false)
-            {
-                return false;
-            }
-
-            return inputs[theAction].IsPressed(thePlayer);
-        }
-
-        public bool IsPressed(string theAction, PlayerIndex? thePlayer)
-        {
-            if (thePlayer == null)
-            {
-                PlayerIndex theReturnedControllingPlayer;
-                return IsPressed(theAction,
-                                 thePlayer,
-                                 out theReturnedControllingPlayer);
-            }
-
-            return IsPressed(theAction, (PlayerIndex)thePlayer);
-        }
-
-        public bool IsPressed(string theAction,
-                              PlayerIndex? thePlayer,
-                              out PlayerIndex theControllingPlayer)
-        {
-            if (!inputs.ContainsKey(theAction))
-            {
-                theControllingPlayer = PlayerIndex.One;
-                return false;
-            }
-
-            if (thePlayer == null)
-            {
-                if (IsPressed(theAction, PlayerIndex.One))
-                {
-                    theControllingPlayer = PlayerIndex.One;
-                    return true;
-                }
-
-                if (IsPressed(theAction, PlayerIndex.Two))
-                {
-                    theControllingPlayer = PlayerIndex.Two;
-                    return true;
-                }
-
-                if (IsPressed(theAction, PlayerIndex.Three))
-                {
-                    theControllingPlayer = PlayerIndex.Three;
-                    return true;
-                }
-
-                if (IsPressed(theAction, PlayerIndex.Four))
-                {
-                    theControllingPlayer = PlayerIndex.Four;
-                    return true;
-                }
-
-                theControllingPlayer = PlayerIndex.One;
-                return false;
-            }
-
-            theControllingPlayer = (PlayerIndex)thePlayer;
-            return IsPressed(theAction, (PlayerIndex)thePlayer);
         }
 
         public void AddGamePadInput(string theAction,
@@ -164,15 +81,8 @@ namespace Amulet_of_Ouroboros.Inputs
                 {
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
         
         public bool CheckMouseOver(Vector2 pos, int width, int height)
@@ -199,15 +109,8 @@ namespace Amulet_of_Ouroboros.Inputs
                 {
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public bool CheckMouseRelease(Button button)
@@ -221,16 +124,8 @@ namespace Amulet_of_Ouroboros.Inputs
                 {
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
-
     }
 }

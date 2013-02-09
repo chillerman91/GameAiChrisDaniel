@@ -2,14 +2,14 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Amulet_of_Ouroboros.Sprites;
+using SensorsAndSuch.Sprites;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Microsoft.Xna.Framework.Content;
-using Amulet_of_Ouroboros.Maps;
-using Amulet_of_Ouroboros.Texts;
+using SensorsAndSuch.Maps;
+using SensorsAndSuch.Texts;
 
-namespace Amulet_of_Ouroboros.Mobs
+namespace SensorsAndSuch.Mobs
 {
 
     public class MobManager
@@ -17,8 +17,8 @@ namespace Amulet_of_Ouroboros.Mobs
         BaseMonster[] Monsters;
         private static int MaxMonsters = 500;
 
-        Text info = new Text(Globals.content.Load<SpriteFont>("Fonts/buttonFont"), displayText: "", displayPosition: new Vector2(0, 0), displayColor: Color.White,
-                     outlineColor: Color.Black, isTextOutlined: true, alignment: Amulet_of_Ouroboros.Texts.Text.Alignment.None, displayArea: Rectangle.Empty);
+        /*Text info = new Text(Globals.content.Load<SpriteFont>("Fonts/buttonFont"), displayText: "", displayPosition: new Vector2(0, 0), displayColor: Color.White,
+                     outlineColor: Color.Black, isTextOutlined: true, alignment: SensorsAndSuch.Texts.Text.Alignment.None, displayArea: Rectangle.Empty);*/
         public int Count = 0;
         public MobManager() 
         {
@@ -122,7 +122,7 @@ namespace Amulet_of_Ouroboros.Mobs
                 Monsters[i].Draw(batch);
                 i++;
             }
-            info.Draw(batch);
+            //info.Draw(batch);
             Count = i - 1;
         }
 
@@ -151,13 +151,13 @@ namespace Amulet_of_Ouroboros.Mobs
                 Vector2 tran = Globals.map.TranslateToPos(Monsters[i].GridPos);
                 if (input.CheckMouseOver(tran, BaseTile.TileWidth, BaseTile.TileHeight))
                 {
-                    info.ChangeText(Monsters[i].GetInfo());
-                    info.Position = new Vector2(tran.X + BaseTile.TileWidth,tran.Y + BaseTile.TileHeight);
+                    //info.ChangeText(Monsters[i].GetInfo());
+                    //info.Position = new Vector2(tran.X + BaseTile.TileWidth,tran.Y + BaseTile.TileHeight);
                     return;
                 }
                 i++;
             }
-            info.ChangeText("");
+            //info.ChangeText("");
         }
     }
 }

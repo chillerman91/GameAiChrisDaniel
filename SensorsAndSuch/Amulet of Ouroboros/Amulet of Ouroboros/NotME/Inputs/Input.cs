@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
-using Amulet_of_Ouroboros.Sprites;
+using SensorsAndSuch.Sprites;
 
-namespace Amulet_of_Ouroboros.Inputs
+namespace SensorsAndSuch.Inputs
 {
     class Input
     {
@@ -29,40 +29,15 @@ namespace Amulet_of_Ouroboros.Inputs
 
         public Input()
         {
-            if (CurrentGamePadState.Count == 0)
-            {
-                CurrentGamePadState.Add(PlayerIndex.One, GamePad.GetState(PlayerIndex.One));
-                CurrentGamePadState.Add(PlayerIndex.Two, GamePad.GetState(PlayerIndex.Two));
-                CurrentGamePadState.Add(PlayerIndex.Three, GamePad.GetState(PlayerIndex.Three));
-                CurrentGamePadState.Add(PlayerIndex.Four, GamePad.GetState(PlayerIndex.Four));
-
-                PreviousGamePadState.Add(PlayerIndex.One, GamePad.GetState(PlayerIndex.One));
-                PreviousGamePadState.Add(PlayerIndex.Two, GamePad.GetState(PlayerIndex.Two));
-                PreviousGamePadState.Add(PlayerIndex.Three, GamePad.GetState(PlayerIndex.Three));
-                PreviousGamePadState.Add(PlayerIndex.Four, GamePad.GetState(PlayerIndex.Four));
-
-                GamepadConnectionState.Add(PlayerIndex.One, CurrentGamePadState[PlayerIndex.One].IsConnected);
-                GamepadConnectionState.Add(PlayerIndex.Two, CurrentGamePadState[PlayerIndex.Two].IsConnected);
-                GamepadConnectionState.Add(PlayerIndex.Three, CurrentGamePadState[PlayerIndex.Three].IsConnected);
-                GamepadConnectionState.Add(PlayerIndex.Four, CurrentGamePadState[PlayerIndex.Four].IsConnected);
-            }
         }
 
         static public void BeginUpdate()
         {
-            CurrentGamePadState[PlayerIndex.One] = GamePad.GetState(PlayerIndex.One);
-            CurrentGamePadState[PlayerIndex.Two] = GamePad.GetState(PlayerIndex.Two);
-            CurrentGamePadState[PlayerIndex.Three] = GamePad.GetState(PlayerIndex.Three);
-            CurrentGamePadState[PlayerIndex.Four] = GamePad.GetState(PlayerIndex.Four);
             CurrentKeyboardState = Keyboard.GetState(PlayerIndex.One);
         }
 
         static public void EndUpdate()
         {
-            PreviousGamePadState[PlayerIndex.One] = CurrentGamePadState[PlayerIndex.One];
-            PreviousGamePadState[PlayerIndex.Two] = CurrentGamePadState[PlayerIndex.Two];
-            PreviousGamePadState[PlayerIndex.Three] = CurrentGamePadState[PlayerIndex.Three];
-            PreviousGamePadState[PlayerIndex.Four] = CurrentGamePadState[PlayerIndex.Four];
             PreviousKeyboardState = CurrentKeyboardState;
         }
 
@@ -98,16 +73,10 @@ namespace Amulet_of_Ouroboros.Inputs
 
         public bool IsPressed(PlayerIndex thePlayerIndex, Rectangle? theCurrentObjectLocation)
         {
-            if (IsKeyboardInputPressed())
+            if (IsKeyboardInputPressed() || IsGamepadInputPressed(thePlayerIndex))
             {
                 return true;
             }
-
-            if (IsGamepadInputPressed(thePlayerIndex))
-            {
-                return true;
-            }
-
             return false;
         }
 
@@ -115,16 +84,12 @@ namespace Amulet_of_Ouroboros.Inputs
         {
             foreach (Keys aKey in keyboardDefinedInputs.Keys)
             {
-                if (keyboardDefinedInputs[aKey] && CurrentKeyboardState.IsKeyDown(aKey) && !PreviousKeyboardState.IsKeyDown(aKey))
-                {
-                    return true;
-                }
-                else if (!keyboardDefinedInputs[aKey] && CurrentKeyboardState.IsKeyDown(aKey))
+                if ((keyboardDefinedInputs[aKey] && CurrentKeyboardState.IsKeyDown(aKey) && !PreviousKeyboardState.IsKeyDown(aKey))
+                    || (!keyboardDefinedInputs[aKey] && CurrentKeyboardState.IsKeyDown(aKey)))
                 {
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -132,16 +97,12 @@ namespace Amulet_of_Ouroboros.Inputs
         {
             foreach (Buttons aButton in gamepadDefinedInputs.Keys)
             {
-                if (gamepadDefinedInputs[aButton] && CurrentGamePadState[thePlayerIndex].IsButtonDown(aButton) && !PreviousGamePadState[thePlayerIndex].IsButtonDown(aButton))
-                {
-                    return true;
-                }
-                else if (!gamepadDefinedInputs[aButton] && CurrentGamePadState[thePlayerIndex].IsButtonDown(aButton))
+                if ((gamepadDefinedInputs[aButton] && CurrentGamePadState[thePlayerIndex].IsButtonDown(aButton) && !PreviousGamePadState[thePlayerIndex].IsButtonDown(aButton))
+                    || (!gamepadDefinedInputs[aButton] && CurrentGamePadState[thePlayerIndex].IsButtonDown(aButton)))
                 {
                     return true;
                 }
             }
-
             return false;
         }
     }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Content;
 
-namespace Amulet_of_Ouroboros.Sprites
+namespace SensorsAndSuch.Sprites
 {
     class Background : Sprite
     {

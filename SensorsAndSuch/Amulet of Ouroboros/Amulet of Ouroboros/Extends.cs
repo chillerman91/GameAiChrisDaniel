@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace Amulet_of_Ouroboros
+namespace SensorsAndSuch
 {
     static class Extends{
     

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Amulet_of_Ouroboros.Texts
+namespace SensorsAndSuch.Texts
 {
     class Text
     {
@@ -19,8 +19,8 @@ namespace Amulet_of_Ouroboros.Texts
         SpriteFont font;
         string text;
         Vector2 textSize;
-        Color outlineColor = Color.White;
-        bool isTextOutlined = false;
+        Color outlineColor = Color.MediumPurple;
+        bool isTextOutlined = true;
 
         public Text(SpriteFont displayFont, string displayText, Vector2 displayPosition)
             : this(displayFont, displayText, displayPosition, Color.White, Color.White, false, Alignment.None, Rectangle.Empty)
@@ -91,7 +91,6 @@ namespace Amulet_of_Ouroboros.Texts
 
                 case Alignment.None:
                     {
-                        //Nothing to do
                         break;
                     }
             }

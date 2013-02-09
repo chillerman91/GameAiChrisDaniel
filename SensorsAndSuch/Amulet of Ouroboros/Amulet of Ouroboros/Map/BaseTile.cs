@@ -2,12 +2,12 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Amulet_of_Ouroboros.Sprites;
+using SensorsAndSuch.Sprites;
 using Microsoft.Xna.Framework.Graphics;
-using Amulet_of_Ouroboros.Mobs;
-using Amulet_of_Ouroboros;
+using SensorsAndSuch.Mobs;
+using SensorsAndSuch;
 
-namespace Amulet_of_Ouroboros.Maps
+namespace SensorsAndSuch.Maps
 {
     public abstract class BaseTile
     {

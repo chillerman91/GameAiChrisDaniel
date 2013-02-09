@@ -8,10 +8,10 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using Amulet_of_Ouroboros.Screens;
+using SensorsAndSuch.Screens;
 using FarseerPhysics.SamplesFramework;
 
-namespace Amulet_of_Ouroboros
+namespace SensorsAndSuch
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
@@ -40,9 +40,8 @@ namespace Amulet_of_Ouroboros
 
         protected override void LoadContent()
         {
-            debugFont = Content.Load<SpriteFont>("Fonts/buttonFont");
+            debugFont = Content.Load<SpriteFont>("Fonts/debugFont");
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
             screen = new ScreenStateSwitchboard(this, spriteBatch, graphics, GraphicsDevice);
         }
 
@@ -59,7 +58,7 @@ namespace Amulet_of_Ouroboros
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.DarkRed);
             screen.Draw();
             base.Draw(gameTime);
         }

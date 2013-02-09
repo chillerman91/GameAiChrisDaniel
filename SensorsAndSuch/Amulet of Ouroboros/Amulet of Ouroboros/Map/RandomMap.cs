@@ -2,20 +2,20 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Amulet_of_Ouroboros.Sprites;
+using SensorsAndSuch.Sprites;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Microsoft.Xna.Framework.Content;
-using Amulet_of_Ouroboros.Maps;
-using Amulet_of_Ouroboros.Mobs;
+using SensorsAndSuch.Maps;
+using SensorsAndSuch.Mobs;
 
-namespace Amulet_of_Ouroboros.Maps
+namespace SensorsAndSuch.Maps
 {
 
     public class RandomMap
     {
-        private static int _mapWidth = 20;
-        private static int _mapHeight = 20;
+        private static int _mapWidth = 50;
+        private static int _mapHeight = 50;
 
         private static int startX = 20;
         private static int startY = 20;

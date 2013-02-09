@@ -3,23 +3,22 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
-using Amulet_of_Ouroboros.Sprites;
-using Amulet_of_Ouroboros.Texts;
-using Amulet_of_Ouroboros.Maps;
-using Amulet_of_Ouroboros.Mobs;
+using SensorsAndSuch.Sprites;
+using SensorsAndSuch.Texts;
+using SensorsAndSuch.Maps;
+using SensorsAndSuch.Mobs;
 using FarseerPhysics.SamplesFramework;
-//using Amulet_of_Ouroboros.Screens.Screen.ChangeScreen;
-using Amulet_of_Ouroboros.FrameWork;
+//using SensorsAndSuch.Screens.Screen.ChangeScreen;
+using SensorsAndSuch.FrameWork;
 
-namespace Amulet_of_Ouroboros.Screens
+namespace SensorsAndSuch.Screens
 {
     class Gameplay : SensorScreen
     {
         Background background;
         HUDPlayerInfo HUDPlayerInfo;
         Player player;
-
-
+        private Boolean GameStart = false;
         //public InputHelper input;
         int tick = 0;
         GraphicsDevice Device;
@@ -39,15 +38,10 @@ namespace Amulet_of_Ouroboros.Screens
             Globals.SetLevelSpecific(new MobManager(), new RandomMap());
             player = new Player(content, Globals.map.GetRandomFreePos());
             Globals.player = player;
-            //Globals.Mobs.AddPlayer(player);
-            for (int i = 0; i < 0; i++)
-                Globals.Mobs.AddMonster(BaseMonster.MonTypes.Snake, Globals.map.GetRandomFreePos());
-            for (int i = 0; i < 0; i++)
-                Globals.Mobs.AddMonster(BaseMonster.MonTypes.Snake, Globals.map.GetRandomFreePos(), Globals.rand.Next(100) + 20);
+            HUDPlayerInfo = new HUDPlayerInfo(content, player);
             for (int i = 0; i < 10; i++)
                 Globals.Mobs.AddMonster(BaseMonster.MonTypes.Boar, Globals.map.GetRandomFreePos(), Globals.rand.Next(8) + 2);
         }
-        private Boolean GameStart = false;
         protected override void UpdateScreen(GameTime gameTime, DisplayOrientation displayOrientation)
         {
 
@@ -103,11 +97,11 @@ namespace Amulet_of_Ouroboros.Screens
             //attackButton.Draw(batch);
 
             //skipButton.Draw(batch);
-           // HUDPlayerInfo.Draw(batch);
             //leftButton.Draw(batch);
             //rightButton.Draw(batch);
             //upButton.Draw(batch);
             //downButton.Draw(batch);
+            HUDPlayerInfo.Draw(batch);
         }
     }
 }

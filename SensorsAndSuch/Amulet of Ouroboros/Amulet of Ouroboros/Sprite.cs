@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Amulet_of_Ouroboros.Sprites
+namespace SensorsAndSuch.Sprites
 {
     class Sprite
     {
@@ -17,23 +17,9 @@ namespace Amulet_of_Ouroboros.Sprites
             texture = content.Load<Texture2D>(assetName);
         }
 
-        public void Update(GameTime gameTime)
-        {
-            UpdateSprite(gameTime);
-        }
-
-        protected virtual void UpdateSprite(GameTime gameTime)
-        {
-        }
-
-        public void Draw(SpriteBatch batch)
+        public virtual void Draw(SpriteBatch batch)
         {
             batch.Draw(texture, Position, color);
-            DrawSprite(batch);
-        }
-
-        protected virtual void DrawSprite(SpriteBatch batch)
-        {
         }
 
         public bool IsCollidingWith(Sprite spriteToCheck)

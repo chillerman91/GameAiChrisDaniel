@@ -1,6 +1,6 @@
 using System;
 
-namespace Amulet_of_Ouroboros
+namespace SensorsAndSuch
 {
 #if WINDOWS || XBOX
     static class Program
