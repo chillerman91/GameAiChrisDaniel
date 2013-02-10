@@ -30,6 +30,7 @@ namespace SensorsAndSuch.Mobs
         Color defaultC = Color.White;
         float OffSet;
         private float distance;
+        private Vector2 pt;
 
         #endregion
 
@@ -50,7 +51,7 @@ namespace SensorsAndSuch.Mobs
             OffSet = offSet;
             color = defaultC;
         }
-        public Vector2 pt;
+        
         public float Update()
         {
             distance = 1;

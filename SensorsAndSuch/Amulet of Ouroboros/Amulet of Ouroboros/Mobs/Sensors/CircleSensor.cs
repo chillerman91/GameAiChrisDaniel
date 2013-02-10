@@ -30,6 +30,7 @@ namespace SensorsAndSuch.Mobs
         protected float radius;
         protected Color color = Color.White;
         protected List<Fixture> collided;
+
         public CircleSensor(Body attatched, Color color, float radius = 1f)
         {
             color.A = 255 / 3;
@@ -60,35 +61,61 @@ namespace SensorsAndSuch.Mobs
             //if (!collided.Contains(fixtureB) && !fixtureB.Body.Equals(attatchedTo))
             collided.Remove(fixtureB);
         }
-        public float GetClosestCollider() 
+
+        public List<Vector2> GetCloseColliders(Vector2 heading) 
         {
-            float ret = int.MaxValue;
-            float  distSqrd = int.MaxValue;
+            List<Vector2> nearAgents = new List<Vector2>();
+            heading.Normalize();
+            //Vector2 normal = new Vector2(heading.Y, -1 * heading.X);
+
+            //float  distSqrd = int.MaxValue;
             foreach(Fixture col in collided)
             {
-                Vector2 temp = col.Body.Position - circle.Position;
-                distSqrd = (temp).LengthSquared();
-                if (ret > distSqrd)
+                Vector2 agentVector = col.Body.Position - circle.Position;
+                float distance = agentVector.Length();
+                agentVector.Normalize();
+                //distSqrd = (agentVector).LengthSquared();
+                if (radius > distance)
                 {
-                    ret = distSqrd;
+                    float angle = (float)(Math.Acos(Vector2.Dot(heading, agentVector)) * (180/Math.PI));
+                    // Do a cross product to determine which side of the heading the agent is on.
+                    // If the z component of the cross product is positive, the agent is closer to the right then the left.
+                    // We adjust the degrees then to make possible for the degrees to have a range of 0-359. 
+                    if (Vector3.Cross(new Vector3(heading, 0), new Vector3(agentVector, 0)).Z > 0)//Vector2.Dot(distance, normal) > )
+                    {
+                        angle = 360 - angle;
+                    }
+                    nearAgents.Add(new Vector2(distance, angle));
                 }
             }
-            return ret;
+            return nearAgents;
         }
-        public void Update()
+
+        public List<Vector2> Update(Vector2 heading)
         {
-            float distSqrd = GetClosestCollider();
+            List<Vector2> CloseColliders = GetCloseColliders(heading);
             //color = Color.White;
 
-            if (distSqrd != int.MaxValue)
+            //if (distSqrd != int.MaxValue)
+            if (CloseColliders.Count > 0)
             {
-                float x = (distSqrd / radius);//(radius * radius));
-                color = new Color(255- (int)(x * 255), 0, 0, 255 / 3);
+                float minDist = int.MaxValue;
+                foreach (Vector2 collider in CloseColliders)
+                {
+                    if (collider.X < minDist)
+                    {
+                        minDist = (collider.X / radius);//(radius * radius));
+                    }
+                }
+                
+                color = new Color(255- (int)(minDist * 255), 0, 0, 255 / 3);
             } 
             else
                 color = new Color(0, 0, 0, 255 / 3);
             
             circle.Position = attatchedTo.Position;
+
+            return CloseColliders;
         }
 
         public void Draw(SpriteBatch batch)

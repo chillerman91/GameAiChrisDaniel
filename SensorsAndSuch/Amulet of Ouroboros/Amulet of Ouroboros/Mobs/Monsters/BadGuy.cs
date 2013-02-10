@@ -62,7 +62,8 @@ namespace SensorsAndSuch.Mobs
             float ret = Wiskers[0].Update();
             float ret1 = Wiskers[1].Update();
             float ret2 = Wiskers[2].Update();// +(Globals.rand.Next((int)4) - 2) / 10f;
-            CircleSensor.Update();
+            CircleSensor.Update(this.Dir);
+
             float range = (1 - ret) * 30 + 2;
             // (Globals.rand.Next((int) range) - range/2) / 500f
             circle.ApplyTorque((float) (ret1 - ret2)/100f);

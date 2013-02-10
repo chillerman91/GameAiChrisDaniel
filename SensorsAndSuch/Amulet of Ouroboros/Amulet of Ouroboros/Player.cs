@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SensorsAndSuch.Maps;
 using SensorsAndSuch.Mobs;
 using SensorsAndSuch.Screens;
+using System.Collections.Generic;
 
 namespace SensorsAndSuch.Sprites
 {
@@ -22,29 +23,34 @@ namespace SensorsAndSuch.Sprites
             : base(GridPos, Color.Purple, 0, FarseerPhysics.Dynamics.BodyType.Dynamic)
         {
         }
+
         internal void SetThisHUD(HUDPlayerInfo HUD)
         {
             this.HUD = HUD;
         }
+
         public void TakeTurn(MoveOpt Opt)
         {
-
-            float ret = Wiskers[0].Update();
-            float ret1 = Wiskers[1].Update();
-            float ret2 = Wiskers[2].Update();
-            CircleSensor.Update();
+            float[] ret = new float[3];
+            ret[0] = Wiskers[0].Update();
+            ret[1] = Wiskers[1].Update();
+            ret[2] = Wiskers[2].Update();
+            List<Vector2> circleContent = CircleSensor.Update(this.Dir);
+            
             switch (Opt)
             {
                 case MoveOpt.LEFT:
                     {
                         if (circle.AngularVelocity < 70)
                             circle.ApplyTorque((.5f) / 100f);
+                        this.Dir = circle.Rotation.GetVecFromAng();
                         break;
                     }
                 case MoveOpt.RIGHT:
                     {
                         if (circle.AngularVelocity > -70)
                             circle.ApplyTorque((-.5f) / 100f);
+                        this.Dir = circle.Rotation.GetVecFromAng();
                         break;
                     }
                 case MoveOpt.FORWARD:
@@ -58,7 +64,18 @@ namespace SensorsAndSuch.Sprites
                         break;
                     }
             }
-            HUD.Update(string.Format("{0:F2}", ret2), string.Format("{0:F2}", ret), string.Format("{0:F2}", ret1));
+
+            // Update HUD for each sensor type.
+            HUD.UpdateWhiskers(string.Format("{0:F2}", ret[2]), string.Format("{0:F2}", ret[0]), string.Format("{0:F2}", ret[1]));
+
+            string adjacentInfo = "Agents: ";
+            int i = 0;
+            foreach(Vector2 otherAgent in circleContent)
+            {
+                i++;
+                adjacentInfo += string.Format("{0}) dist: {1:F0}, angle: {2:F0}, ", i, otherAgent.X, otherAgent.Y);
+            }
+            HUD.UpdateAdjacents(adjacentInfo);
         }
 
         public override void Draw(SpriteBatch batch)
