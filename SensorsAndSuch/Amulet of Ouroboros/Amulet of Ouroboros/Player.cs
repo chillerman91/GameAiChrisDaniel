@@ -43,14 +43,12 @@ namespace SensorsAndSuch.Sprites
                     {
                         if (circle.AngularVelocity < 70)
                             circle.ApplyTorque((.5f) / 100f);
-                        this.Dir = circle.Rotation.GetVecFromAng();
                         break;
                     }
                 case MoveOpt.RIGHT:
                     {
                         if (circle.AngularVelocity > -70)
                             circle.ApplyTorque((-.5f) / 100f);
-                        this.Dir = circle.Rotation.GetVecFromAng();
                         break;
                     }
                 case MoveOpt.FORWARD:
@@ -65,7 +63,13 @@ namespace SensorsAndSuch.Sprites
                     }
             }
 
-            // Update HUD for each sensor type.
+            // Update player position and heading.
+            this.Dir = circle.Rotation.GetVecFromAng();
+            this.CurrentGridPos = circle.Position;
+            
+            // Update HUD for position/heading and each sensor type.
+            HUD.UpdatePlayer(string.Format("Player Position: X={0:F2} Y={1:F2}; Heading: X={2:F2} Y={3:F2}", this.CurrentGridPos.X, this.CurrentGridPos.Y, this.Dir.X, this.Dir.Y));
+
             HUD.UpdateWhiskers(string.Format("{0:F2}", ret[2]), string.Format("{0:F2}", ret[0]), string.Format("{0:F2}", ret[1]));
 
             string adjacentInfo = "Agents: ";
@@ -73,7 +77,7 @@ namespace SensorsAndSuch.Sprites
             foreach(Vector2 otherAgent in circleContent)
             {
                 i++;
-                adjacentInfo += string.Format("{0}) dist: {1:F0}, angle: {2:F0}, ", i, otherAgent.X, otherAgent.Y);
+                adjacentInfo += string.Format("{0}) dist: {1:F1}, angle: {2:F0}, ", i, otherAgent.X, otherAgent.Y);
             }
             HUD.UpdateAdjacents(adjacentInfo);
         }

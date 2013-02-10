@@ -17,8 +17,9 @@ namespace SensorsAndSuch.Screens
         Text PlayerHealth;
         Text Strength;
         Text exp;
-        string[] whiskerValues;
-        string adjascentValues;
+        private string playerValues;
+        private string[] whiskerValues;
+        private string adjascentValues;
 
         public HUDPlayerInfo(ContentManager content, Player p)
         {
@@ -28,15 +29,24 @@ namespace SensorsAndSuch.Screens
 
         public void Draw(SpriteBatch batch)
         {
+            if (!string.IsNullOrEmpty(playerValues))
+            {
+                batch.DrawString(player.font, playerValues, new Vector2(50, 10), Color.AliceBlue);
+            }
             if (whiskerValues != null)
             {
                 string text = string.Format("Wisker Distances: [0]={0}, [1]={1}, [2]={2}", whiskerValues[0], whiskerValues[1], whiskerValues[2]);
-                batch.DrawString(player.font, text, new Vector2(50, 20), Color.AliceBlue);
+                batch.DrawString(player.font, text, new Vector2(50, 30), Color.AliceBlue);
             }
             if (!string.IsNullOrEmpty(adjascentValues))
             {
-                batch.DrawString(player.font, adjascentValues, new Vector2(50, 40), Color.AliceBlue); 
+                batch.DrawString(player.font, adjascentValues, new Vector2(50, 50), Color.AliceBlue); 
             }
+        }
+
+        public void UpdatePlayer(string val)
+        {
+            playerValues = val;
         }
 
         public void UpdateWhiskers(params string[] val)
