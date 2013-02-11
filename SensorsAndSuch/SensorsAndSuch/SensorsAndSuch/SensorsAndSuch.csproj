@@ -104,11 +104,10 @@
     <Compile Include="Map\Tiles\Dirt.cs" />
     <Compile Include="Map\BaseTile.cs" />
     <Compile Include="Map\RandomMap.cs" />
-    <Compile Include="NotME\Inputs\GameInput.cs" />
-    <Compile Include="NotME\Inputs\Input.cs" />
+    <Compile Include="GameInput.cs" />
     <Compile Include="Mobs\BaseMonster.cs" />
     <Compile Include="Mobs\MobManager.cs" />
-    <Compile Include="NotME\Screens\ScreenStateSwitchboard.cs" />
+    <Compile Include="ScreenStateSwitchboard.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -116,10 +115,10 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Gameplay.cs" />
     <Compile Include="HUD.cs" />
-    <Compile Include="NotME\Screens\Screen.cs" />
+    <Compile Include="Screen.cs" />
     <Compile Include="Title.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="NotME\Text.cs" />
+    <Compile Include="Text.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

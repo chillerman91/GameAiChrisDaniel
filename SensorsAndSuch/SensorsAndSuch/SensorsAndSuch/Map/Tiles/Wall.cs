@@ -26,9 +26,7 @@ namespace SensorsAndSuch.Maps
             rectangleSprite = new FarseerPhysics.SamplesFramework.Sprite(Globals.AssetCreatorr.TextureFromShape(rectangle.FixtureList[0].Shape,
                                                                     MaterialType.Squares,
                                                                     GetColor(this.GridPos), 1f));
-            
-            //rectangle.BodyType = BodyType.Dynamic;
-            rectangle.Position = this.GridPos; //new Vector2(2, -2);//-13.0f + 1.282f * i);
+            rectangle.Position = this.GridPos;
             rectangle.Friction = 0.75f;
         }
 

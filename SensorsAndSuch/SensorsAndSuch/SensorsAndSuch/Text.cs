@@ -6,7 +6,7 @@ namespace SensorsAndSuch.Texts
     class Text
     {
         public Vector2 Position;
-        public Color DisplayColor = Color.White;
+        public Color DisplayColor = Color.Green;
 
         public enum Alignment
         {
@@ -22,28 +22,8 @@ namespace SensorsAndSuch.Texts
         Color outlineColor = Color.MediumPurple;
         bool isTextOutlined = true;
 
-        public Text(SpriteFont displayFont, string displayText, Vector2 displayPosition)
-            : this(displayFont, displayText, displayPosition, Color.White, Color.White, false, Alignment.None, Rectangle.Empty)
-        {
-        }
-
-        public Text(SpriteFont displayFont, string displayText, Vector2 displayPosition, Color displayColor)
-            : this(displayFont, displayText, displayPosition, displayColor, Color.White, false, Alignment.None, Rectangle.Empty)
-        {
-        }
-
         public Text(SpriteFont displayFont, string displayText, Vector2 displayPosition, Color displayColor, Alignment alignment, Rectangle displayArea)
             : this(displayFont, displayText, displayPosition, displayColor, Color.White, false, alignment, displayArea)
-        {
-        }
-
-        public Text(SpriteFont displayFont, string displayText, Vector2 displayPosition, Color displayColor, Color outlineColor)
-            : this(displayFont, displayText, displayPosition, displayColor, outlineColor, true, Alignment.None, Rectangle.Empty)
-        {
-        }
-
-        public Text(SpriteFont displayFont, string displayText, Vector2 displayPosition, Color displayColor, Color outlineColor, Alignment alignment, Rectangle displayArea)
-            : this(displayFont, displayText, displayPosition, displayColor, outlineColor, true, alignment, displayArea)
         {
         }
 

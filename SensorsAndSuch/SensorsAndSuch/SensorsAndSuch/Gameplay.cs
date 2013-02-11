@@ -15,7 +15,6 @@ namespace SensorsAndSuch.Screens
 {
     class Gameplay : SensorScreen
     {
-        Background background;
         HUDPlayerInfo HUDPlayerInfo;
         Player player;
 
@@ -31,7 +30,6 @@ namespace SensorsAndSuch.Screens
         {
             base.LoadContent(content);
             World.Gravity = new Vector2(0f, 0f);
-            background = new Background(content, "Images/GameplayBackground");
             Globals.SetGeneral(content, Device, World);
             Globals.AssetCreatorr.LoadContent(content);
             Globals.SetLevelSpecific(new MobManager(), new RandomMap());
@@ -48,8 +46,8 @@ namespace SensorsAndSuch.Screens
             GameplayTurnCheck();
         }
         private void GameplayTurnCheck()
-        {            
-            if (!Inputs.Input.PreviousKeyboardState.IsKeyDown(Keys.P) &&Inputs.Input.CurrentKeyboardState.IsKeyDown(Keys.P))
+        {
+            if (!input.PreviousKeyboardState.IsKeyDown(Keys.P) && input.CurrentKeyboardState.IsKeyDown(Keys.P))
             {
                 paused = !paused;
             }
@@ -61,13 +59,12 @@ namespace SensorsAndSuch.Screens
                UpdateAll();
             }
 
-            //HUDPlayerInfo.Update(player);
-            if (input.PreviousMouseState.LeftButton == ButtonState.Pressed && input.CurrentMouseState.LeftButton == ButtonState.Released)
+            if (input.CurrentMouseState.LeftButton == ButtonState.Pressed && input.PreviousMouseState.LeftButton == ButtonState.Released)
             {
                 Globals.map.CreateBlock(input.CurrentMouseState.X, input.CurrentMouseState.Y);
             }
 
-            if (input.PreviousMouseState.RightButton == ButtonState.Pressed && input.CurrentMouseState.RightButton == ButtonState.Released)
+            if (input.CurrentMouseState.RightButton == ButtonState.Pressed && input.PreviousMouseState.RightButton == ButtonState.Released)
             {
                 Vector2 pos = Globals.map.TranslateToPosRev(input.CurrentMouseState.X, input.CurrentMouseState.Y);
                 pos = new Vector2((int)pos.X, (int)pos.Y);
@@ -75,23 +72,23 @@ namespace SensorsAndSuch.Screens
                     Globals.Mobs.AddMonster(BaseMonster.MonTypes.Static, pos);
             }
 
-            if (Inputs.Input.CurrentKeyboardState.IsKeyDown(Keys.A))
+            if (input.CurrentKeyboardState.IsKeyDown(Keys.A))
             {
                 player.TakeTurn(Player.MoveOpt.RIGHT);
             }
-            if (Inputs.Input.CurrentKeyboardState.IsKeyDown(Keys.D))
+            if (input.CurrentKeyboardState.IsKeyDown(Keys.D))
             {
                 player.TakeTurn(Player.MoveOpt.LEFT);
             }
-            if (Inputs.Input.CurrentKeyboardState.IsKeyDown(Keys.W))
+            if (input.CurrentKeyboardState.IsKeyDown(Keys.W))
             {
                 player.TakeTurn(Player.MoveOpt.FORWARD);
             }
-            if (Inputs.Input.CurrentKeyboardState.IsKeyDown(Keys.S))
+            if (input.CurrentKeyboardState.IsKeyDown(Keys.S))
             {
                 player.TakeTurn(Player.MoveOpt.BACK);
-            } 
-            if (!Inputs.Input.PreviousKeyboardState.IsKeyDown(Keys.R) && Inputs.Input.CurrentKeyboardState.IsKeyDown(Keys.R))
+            }
+            if (!input.PreviousKeyboardState.IsKeyDown(Keys.R) && input.CurrentKeyboardState.IsKeyDown(Keys.R))
             {
                 player.Warp();
             }
@@ -110,13 +107,6 @@ namespace SensorsAndSuch.Screens
             Globals.map.Draw(batch);
             Globals.Mobs.Draw(batch);
             player.Draw(batch);
-            //attackButton.Draw(batch);
-
-            //skipButton.Draw(batch);
-            //leftButton.Draw(batch);
-            //rightButton.Draw(batch);
-            //upButton.Draw(batch);
-            //downButton.Draw(batch);
             HUDPlayerInfo.Draw(batch);
         }
     }

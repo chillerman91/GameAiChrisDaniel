@@ -18,7 +18,6 @@ namespace SensorsAndSuch.Screens
         protected SpriteFont font;
         protected GameInput input = new GameInput();
 
-        const string ActionBack = "Back";
 
         public ChangeScreen changeScreenDelegate;
         public delegate void ChangeScreen(ScreenState screen);
@@ -38,7 +37,7 @@ namespace SensorsAndSuch.Screens
 
         public void LoadContent()
         {
-            font = content.Load<SpriteFont>("Fonts/buttonFont");
+            font = content.Load<SpriteFont>("Fonts/debugFont");
             LoadScreenContent(content);
         }
 
@@ -84,21 +83,5 @@ namespace SensorsAndSuch.Screens
         {
             get { return game.GraphicsDevice.PresentationParameters.BackBufferHeight; }
         }
-
-        static public Rectangle ScreenRectangle
-        {
-            get { return new Rectangle(0, 0, ScreenWidth, ScreenHeight); }
-        }
-
-        static public Rectangle ScreenLeftHalf
-        {
-            get { return new Rectangle(0, 0, (int)(ScreenWidth / 2), ScreenHeight); }
-        }
-
-        static public Rectangle ScreenRightHalf
-        {
-            get { return new Rectangle((int)(ScreenWidth / 2), 0, (int)(ScreenWidth / 2), ScreenHeight); }
-        }
-
     }
 }

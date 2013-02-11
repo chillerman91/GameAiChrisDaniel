@@ -9,7 +9,6 @@ namespace SensorsAndSuch.Screens
 {
     class Title : Screen
     {
-        Background background;
         Texture2D titleText;
 
         Button gameButton;
@@ -22,7 +21,6 @@ namespace SensorsAndSuch.Screens
 
         protected override void LoadScreenContent(ContentManager content)
         {
-            background = new Background(content, "Images/TitleBackground");
             titleText = content.Load<Texture2D>("Images/TitleText");
             gameButton = new Button(content, "Game", new Vector2(ScreenWidth / 2 - 100, 400), Color.Blue, Color.White);
         }
@@ -37,7 +35,6 @@ namespace SensorsAndSuch.Screens
 
         protected override void DrawScreen(SpriteBatch batch, DisplayOrientation displayOrientation)
         {
-            background.Draw(batch);
             batch.Draw(titleText, new Rectangle(0, 0, ScreenWidth, ScreenHeight), Color.White);
             gameButton.Draw(batch);
         }

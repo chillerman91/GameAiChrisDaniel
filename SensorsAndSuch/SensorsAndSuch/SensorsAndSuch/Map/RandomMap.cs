@@ -14,8 +14,8 @@ namespace SensorsAndSuch.Maps
 
     public class RandomMap
     {
-        private static int mapWidth = 20;
-        private static int mapHeight = 20;
+        private static int mapWidth = 40;
+        private static int mapHeight = 40;
 
         private static int startX = 20;
         private static int startY = 20;
@@ -42,7 +42,7 @@ namespace SensorsAndSuch.Maps
         {
             if (i < 0 || i >= MapWidth) return false;
             if (j < 0 || j >= MapHeight) return false;
-            return grid[i, j].Count == 1;
+            return grid[i, j].Count == 1 || grid[i, j].Count == 0;
         }
 
         public bool isFree(Vector2 gridPos)

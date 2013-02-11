@@ -128,14 +128,17 @@ namespace SensorsAndSuch.Mobs
                                color, circle.Rotation, Sprite.Origin, 1f,
                                SpriteEffects.None, 0f);
             float dist;
-            foreach (Fixture col in collided)
+            if (radius != 1)
             {
-                Vector2 temp = col.Body.Position - circle.Position;
-                dist = (temp).Length();
-                batch.Draw(texture,
-                   Globals.map.TranslateToPos(attatchedTo.Position), null,
-                   Color.Gainsboro, (float)Math.Atan2(col.Body.Position.Y - attatchedTo.Position.Y,col.Body.Position.X - attatchedTo.Position.X), new Vector2(texture.Width / 2, texture.Height / 2), (dist) / WiskerR,
-                   SpriteEffects.None, 0f);
+                foreach (Fixture col in collided)
+                {
+                    Vector2 temp = col.Body.Position - circle.Position;
+                    dist = (temp).Length();
+                    batch.Draw(texture,
+                       Globals.map.TranslateToPos(attatchedTo.Position), null,
+                       Color.Gainsboro, (float)Math.Atan2(col.Body.Position.Y - attatchedTo.Position.Y, col.Body.Position.X - attatchedTo.Position.X), new Vector2(texture.Width / 2, texture.Height / 2), (dist) / WiskerR,
+                       SpriteEffects.None, 0f);
+                }
             }
         }
 

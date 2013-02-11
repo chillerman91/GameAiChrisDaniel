@@ -8,12 +8,7 @@ namespace SensorsAndSuch.Screens
     public enum ScreenState
     {
         Title,
-        Gameplay,
-        Options,
-        GameOver,
-        GameWin,
-        PreviousScreen,
-        Exit
+        Gameplay
     }
 
     class ScreenStateSwitchboard
@@ -54,20 +49,6 @@ namespace SensorsAndSuch.Screens
                         ChangeScreen(screenState, new CreateScreen(CreateGameplayScreen));
                         break;
                     }
-
-                case ScreenState.PreviousScreen:
-                    {
-                        currentScreen = previousScreen;
-                        currentScreen.Activate();
-                        break;
-                    }
-
-                case ScreenState.Exit:
-                    {
-                        game.Exit();
-                        break;
-                    }
-
             }
         }
 

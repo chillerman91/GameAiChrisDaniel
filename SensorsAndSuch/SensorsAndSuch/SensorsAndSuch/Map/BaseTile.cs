@@ -18,7 +18,7 @@ namespace SensorsAndSuch.Maps
             None
         }
         public static float TileWidth = .75f;
-        public static float TileHeight = .5f;
+        public static float TileHeight = .75f;
         public static int DistBetween = 30;
         public Vector2 GridPos;
         protected Texture2D texture;

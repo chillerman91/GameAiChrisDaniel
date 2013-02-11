@@ -8,60 +8,53 @@ namespace SensorsAndSuch.Inputs
 {
     class GameInput
     {
-        Dictionary<string, Input> inputs = new Dictionary<string, Input>();
-
         public MouseState CurrentMouseState;
         public MouseState PreviousMouseState;
+        Dictionary<Keys, bool> keyboardDefinedInputs = new Dictionary<Keys, bool>();
+        public KeyboardState CurrentKeyboardState;
+        public KeyboardState PreviousKeyboardState;
 
-        public Input MyInput(string theAction)
+        public enum Direction
         {
-            if (inputs.ContainsKey(theAction) == false)
-            {
-                inputs.Add(theAction, new Input());
-            }
+            Up,
+            Down,
+            Left,
+            Right
+        }
 
-            return inputs[theAction];
+        public void AddKeyboardInput(Keys theKey, bool isReleasedPreviously)
+        {
+            if (keyboardDefinedInputs.ContainsKey(theKey))
+            {
+                keyboardDefinedInputs[theKey] = isReleasedPreviously;
+                return;
+            }
+            keyboardDefinedInputs.Add(theKey, isReleasedPreviously);
+        }
+
+        private bool IsKeyboardInputPressed()
+        {
+            foreach (Keys aKey in keyboardDefinedInputs.Keys)
+            {
+                if ((keyboardDefinedInputs[aKey] && CurrentKeyboardState.IsKeyDown(aKey) && !PreviousKeyboardState.IsKeyDown(aKey))
+                    || (!keyboardDefinedInputs[aKey] && CurrentKeyboardState.IsKeyDown(aKey)))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void BeginUpdate()
         {
             PreviousMouseState = CurrentMouseState;
             CurrentMouseState = Mouse.GetState();
-            Input.BeginUpdate();
+            CurrentKeyboardState = Keyboard.GetState(PlayerIndex.One);
         }
 
         public void EndUpdate()
         {
-            Input.EndUpdate();
-        }
-
-        public bool IsPressed(string theAction,
-                              Rectangle theCurrentObjectLocation)
-        {
-            if (!inputs.ContainsKey(theAction))
-            {
-                return false;
-            }
-
-            return inputs[theAction].IsPressed(PlayerIndex.One,
-                                               theCurrentObjectLocation);
-        }
-
-        public bool IsPressed(string theAction)
-        {
-            if (!inputs.ContainsKey(theAction))
-            {
-                return false;
-            }
-            return inputs[theAction].IsPressed(PlayerIndex.One);
-        }
-
-        public void AddKeyboardInput(string theAction,
-                                     Keys theKey,
-                                     bool isReleasedPreviously)
-        {
-            MyInput(theAction).AddKeyboardInput(theKey,
-                                                isReleasedPreviously);
+            PreviousKeyboardState = CurrentKeyboardState;
         }
 
         public bool CheckMousePress(Button button)
