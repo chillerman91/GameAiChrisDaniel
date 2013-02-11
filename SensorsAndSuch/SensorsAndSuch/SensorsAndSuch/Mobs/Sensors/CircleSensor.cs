@@ -21,19 +21,21 @@ namespace SensorsAndSuch.Mobs
 {
     public class CircleSensor
     {
+        #region Datafields
         protected Body circle;
         private FarseerPhysics.SamplesFramework.Sprite Sprite;
 
         protected static int wiskerNumber = 3;
-        protected Body attatchedTo;
+        protected Body attachedTo;
         protected float radius;
         protected Color color = Color.White;
         protected List<Fixture> collided;
         protected float WiskerR;
         public Texture2D texture { get; set; }
+        #endregion
+
         public CircleSensor(Body attatched, Color color, float radius = 1f)
         {
-
             texture = Globals.content.Load<Texture2D>("Sensors/Wisker");
             color.A = 255 / 10;
             circle = BodyFactory.CreateCircle(Globals.World, radius: radius, density: 1f);
@@ -50,12 +52,12 @@ namespace SensorsAndSuch.Mobs
             //circle.FixtureList[0].OnSeparation += this.GetCollisionHandler;
 
             circle.Position = attatched.Position;
-            attatchedTo = attatched;
+            attachedTo = attatched;
             this.radius = radius;
         }
 
         public bool CollisionHandler(Fixture fixtureA, Fixture fixtureB, Contact contact) {
-            if (!collided.Contains(fixtureB) && !fixtureB.Body.Equals(attatchedTo))
+            if (!collided.Contains(fixtureB) && !fixtureB.Body.Equals(attachedTo))
                 collided.Add(fixtureB);
             return true;
         }
@@ -116,7 +118,7 @@ namespace SensorsAndSuch.Mobs
             else
                 color = new Color(0, 0, 0, 255 / 3);
             
-            circle.Position = attatchedTo.Position;
+            circle.Position = attachedTo.Position;
 
             return CloseColliders;
         }
@@ -130,15 +132,13 @@ namespace SensorsAndSuch.Mobs
             float dist;
             if (radius != 1)
             {
-                foreach (Fixture col in collided)
-                {
-                    Vector2 temp = col.Body.Position - circle.Position;
-                    dist = (temp).Length();
-                    batch.Draw(texture,
-                       Globals.map.TranslateToPos(attatchedTo.Position), null,
-                       Color.Gainsboro, (float)Math.Atan2(col.Body.Position.Y - attatchedTo.Position.Y, col.Body.Position.X - attatchedTo.Position.X), new Vector2(texture.Width / 2, texture.Height / 2), (dist) / WiskerR,
-                       SpriteEffects.None, 0f);
-                }
+                Vector2 temp = col.Body.Position - circle.Position;
+                dist = (temp).Length();
+                batch.Draw(texture, Globals.map.TranslateToPos(attachedTo.Position), 
+                        null, Color.Gainsboro, 
+                        (float)Math.Atan2(col.Body.Position.Y - attachedTo.Position.Y,col.Body.Position.X - attachedTo.Position.X), 
+                        new Vector2(texture.Width / 2, texture.Height / 2), (dist) / WiskerR,
+                        SpriteEffects.None, 0f);
             }
         }
 

@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mobs\Sensors\CircleSensor.cs" />
+    <Compile Include="Mobs\Sensors\PieSlice.cs" />
     <Compile Include="Mobs\Sensors\Wisker.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="Extends.cs" />

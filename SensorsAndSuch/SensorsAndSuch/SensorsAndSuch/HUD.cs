@@ -10,6 +10,7 @@ namespace SensorsAndSuch.Screens
 {
     internal class HUDPlayerInfo
     {
+        #region Datafields
         Vector2 BaseLocation = new Vector2(25, 635);
         Texture2D PlayerPieceImage;
         Text Level;
@@ -20,6 +21,8 @@ namespace SensorsAndSuch.Screens
         private string playerValues;
         private string[] whiskerValues;
         private string adjascentValues;
+        private string pieSliceValues;
+        #endregion
 
         public HUDPlayerInfo(ContentManager content, Player p)
         {
@@ -42,6 +45,10 @@ namespace SensorsAndSuch.Screens
             {
                 batch.DrawString(player.font, adjascentValues, new Vector2(50, 50), Color.AliceBlue); 
             }
+            if (!string.IsNullOrEmpty(pieSliceValues))
+            {
+                batch.DrawString(player.font, pieSliceValues, new Vector2(50, 70), Color.AliceBlue); 
+            }
         }
 
         public void UpdatePlayer(string val)
@@ -59,5 +66,9 @@ namespace SensorsAndSuch.Screens
             adjascentValues = val;
         }
 
+        public void UpdatePieSlices(string val)
+        {
+            pieSliceValues = val;
+        }
     }
 }

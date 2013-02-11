@@ -20,8 +20,9 @@ namespace SensorsAndSuch.Sprites
         }
         HUDPlayerInfo HUD;
         public Player(ContentManager content, Vector2 GridPos)
-            : base(GridPos, Color.Purple, 0, FarseerPhysics.Dynamics.BodyType.Dynamic, 2)
+            : base(GridPos, Color.Purple, 0, FarseerPhysics.Dynamics.BodyType.Dynamic, 1)
         {
+            PieSliceSensor = new PieSlice(circle, new Color(10, 10, 10, 90), 2f);
         }
 
         internal void SetThisHUD(HUDPlayerInfo HUD)
@@ -36,6 +37,8 @@ namespace SensorsAndSuch.Sprites
             ret[1] = Wiskers[1].Update();
             ret[2] = Wiskers[2].Update();
             List<Vector2> circleContent = CircleSensor.Update(this.Dir);
+            int[] pieSliceContent = PieSliceSensor.Update(this.Dir);
+
             switch (Opt)
             {
                 case MoveOpt.LEFT:
@@ -67,10 +70,13 @@ namespace SensorsAndSuch.Sprites
             this.CurrentGridPos = circle.Position;
             
             // Update HUD for position/heading and each sensor type.
+            // Update player info.
             HUD.UpdatePlayer(string.Format("Player Position: X={0:F2} Y={1:F2}; Heading: X={2:F2} Y={3:F2}", this.CurrentGridPos.X, this.CurrentGridPos.Y, this.Dir.X, this.Dir.Y));
 
+            // Update whisker info.
             HUD.UpdateWhiskers(string.Format("{0:F2}", ret[2]), string.Format("{0:F2}", ret[0]), string.Format("{0:F2}", ret[1]));
 
+            // Update circleSensor info.
             string adjacentInfo = "Agents: ";
             int i = 0;
             foreach(Vector2 otherAgent in circleContent)
@@ -79,6 +85,12 @@ namespace SensorsAndSuch.Sprites
                 adjacentInfo += string.Format("{0}) dist: {1:F1}, angle: {2:F0}, ", i, otherAgent.X, otherAgent.Y);
             }
             HUD.UpdateAdjacents(adjacentInfo);
+
+            // Update pieslice info.
+            string pieSliceInfo = "PieSlices: ";
+            pieSliceInfo += string.Format("Front: {0}, Left: {1}, Back: {2}, Right: {3}",
+                pieSliceContent[0], pieSliceContent[1], pieSliceContent[2], pieSliceContent[3]);
+            HUD.UpdatePieSlices(pieSliceInfo);
         }
 
         public override void Draw(SpriteBatch batch)
@@ -102,6 +114,7 @@ namespace SensorsAndSuch.Sprites
             Vector2 pos = Globals.map.GetRandomFreePos();
             circle.Position = new Vector2 (pos.X * TileWidth, pos.Y * TileHeight);
             CircleSensor.ClearCollisions();
+            PieSliceSensor.ClearCollisions();
         }
 
         internal void Rest()

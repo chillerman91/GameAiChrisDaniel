@@ -21,12 +21,16 @@ namespace SensorsAndSuch.Mobs
 {
     public class BadGuy : BaseMonster
     {
+        #region Datafields
         public Body circle;
         private FarseerPhysics.SamplesFramework.Sprite Sprite;
 
         protected static int wiskerNumber = 3;
         protected Wisker[] Wiskers = new Wisker[wiskerNumber];
         protected CircleSensor CircleSensor;
+        protected PieSlice PieSliceSensor;
+        #endregion
+
         public BadGuy(Vector2 GridPos, int id, BodyType type = BodyType.Dynamic)
             : this(GridPos, Color.ForestGreen, id, type, circleRadius: 1)
         {
@@ -44,7 +48,7 @@ namespace SensorsAndSuch.Mobs
             circle.AngularDamping = 3f;
 
             circle.BodyType = bodType;
-            int i = 0;
+            
             Vector2 pos = GridPos;// Globals.map.GetRandomFreePos();
             circle.Position = new Vector2(pos.X * TileWidth, pos.Y * TileHeight);
             circle.Friction = 0.0f;
@@ -53,6 +57,7 @@ namespace SensorsAndSuch.Mobs
             Wiskers[1] = new Wisker(attatched: circle, offSet: (float)Math.PI / 4f, WiskerLength: 1f);
             Wiskers[2] = new Wisker(attatched: circle, offSet: (float)Math.PI / -4f, WiskerLength: 1f);
             CircleSensor = new CircleSensor(attatched: circle, color: Color.Green, radius: circleRadius);
+            PieSliceSensor = new PieSlice(circle, new Color(10, 10, 10, 50), 1f);
         }
 
         public override void TakeTurn()
@@ -61,6 +66,8 @@ namespace SensorsAndSuch.Mobs
             float ret1 = Wiskers[1].Update();
             float ret2 = Wiskers[2].Update();// +(Globals.rand.Next((int)4) - 2) / 10f;
             CircleSensor.Update(this.Dir);
+            PieSliceSensor.Update(this.Dir);
+
             float range = (1 - ret) * 30 + 2;
             // (Globals.rand.Next((int) range) - range/2) / 500f
             circle.ApplyTorque((float) (ret1 - ret2)/100f);
@@ -87,6 +94,9 @@ namespace SensorsAndSuch.Mobs
             Wiskers[2].Draw(batch);
 
             CircleSensor.Draw(batch);
+
+            PieSliceSensor.Draw(batch);
+
             batch.Draw(Sprite.Texture,
                                Globals.map.TranslateToPos(circle.Position), null,
                                Color.White, circle.Rotation, Sprite.Origin, 1f,
