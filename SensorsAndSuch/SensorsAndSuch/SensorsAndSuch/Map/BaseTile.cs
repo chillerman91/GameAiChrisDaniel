@@ -36,7 +36,7 @@ namespace SensorsAndSuch.Maps
         protected Vector2 CurrentPos;
         public BaseTile(string tex, Vector2 GridPos)
         {
-            font = Globals.content.Load<SpriteFont>("Fonts/buttonFont");
+            font = Globals.content.Load<SpriteFont>("Fonts/debugFont");
             texture = Globals.content.Load<Texture2D>(tex);
             this.GridPos = GridPos;
             CurrentPos = new Vector2(0, 0);
